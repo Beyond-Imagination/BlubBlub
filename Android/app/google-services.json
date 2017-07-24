@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "272275186762",
+    "firebase_url": "https://blubblub-92ad5.firebaseio.com",
+    "project_id": "blubblub-92ad5",
+    "storage_bucket": "blubblub-92ad5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272275186762:android:504354d3ae31635f",
+        "android_client_info": {
+          "package_name": "beyond_imagination.blubblub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272275186762-r6r9f9ds167gk1uc4p643ad0tl0tl3hk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyApYLX8DTVaZyquAvKS-X4r3-QVMznrw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
