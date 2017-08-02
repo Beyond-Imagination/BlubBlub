@@ -1,5 +1,6 @@
 package beyond_imagination.blubblub;
 
+import android.service.notification.Condition;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -7,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import beyond_imagination.blubblub.pChatting.ChattingLayout;
+import beyond_imagination.blubblub.pConditionBar.ConditionBar;
 import beyond_imagination.blubblub.pWebView.MainWebView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     /*** Variable ***/
     private MainWebView mainWebView;
     private ChattingLayout chattingLayout;
+    private ConditionBar conditionBar;
 
     // Gesture
     private GestureDetector gestureDetector;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainWebView = (MainWebView) findViewById(R.id.webView);
         chattingLayout = (ChattingLayout) findViewById(R.id.chatting);
+        conditionBar = (ConditionBar) findViewById(R.id.conditionbar);
 
         animationManager = new AnimationManager(this);
 
