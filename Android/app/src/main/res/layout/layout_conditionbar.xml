@@ -25,8 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_x="5dp"
-            android:layout_y="9dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_y="9dp" />
 
         <TextView
             android:id="@+id/textFeed"
@@ -51,8 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_x="5dp"
-            android:layout_y="9dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_y="9dp" />
 
         <TextView
             android:id="@+id/textTemperature"
@@ -77,8 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_x="5dp"
-            android:layout_y="9dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_y="9dp" />
 
         <TextView
             android:id="@+id/textQuality"
@@ -104,8 +101,7 @@
             android:layout_gravity="left"
             android:layout_weight="1"
             android:layout_x="5dp"
-            android:layout_y="9dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_y="9dp" />
 
         <TextView
             android:id="@+id/textLight"
@@ -125,7 +121,7 @@
             android:visibility="invisible"
             app:srcCompat="@mipmap/ic_launcher" />
 
-        <Button
+        <beyond_imagination.blubblub.pSetting.SettingButton
             android:id="@+id/button_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

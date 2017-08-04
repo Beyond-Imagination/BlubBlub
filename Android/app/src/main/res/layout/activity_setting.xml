@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="자동화할거냐?" />
+
+    <beyond_imagination.blubblub.pSetting.AutoRadioGroup
+        android:id="@+id/autoradiogroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/Auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto" />
+
+        <RadioButton
+            android:id="@+id/Passive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Passive" />
+
+    </beyond_imagination.blubblub.pSetting.AutoRadioGroup>
+
+    <TextView
+        android:id="@+id/feedcycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주기 어떻게 할거냐" />
+
+    <beyond_imagination.blubblub.pSetting.FeedCycleSpinner
+        android:id="@+id/feedcyclespinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/maxtemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MAX(온도)" />
+
+    <beyond_imagination.blubblub.pSetting.MaxTempSpinner
+        android:id="@+id/maxtempspinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/mintemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MIN(온도)" />
+
+    <beyond_imagination.blubblub.pSetting.MinTempSpinner
+        android:id="@+id/mintempspinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/luxdegree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="조도" />
+
+    <beyond_imagination.blubblub.pSetting.LuxSpinner
+        android:id="@+id/luxspinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <beyond_imagination.blubblub.pSetting.SaveButton
+            android:id="@+id/savebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Save" />
+
+        <beyond_imagination.blubblub.pSetting.CancelButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel" />
+    </LinearLayout>
+
+</LinearLayout>

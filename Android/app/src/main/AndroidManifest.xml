@@ -20,6 +20,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".pSetting.SettingActivity"
+            android:screenOrientation="landscape"/>
+
         <service
             android:name=".pService.FCMMessagingService">
             <intent-filter>
