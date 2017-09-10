@@ -87,6 +87,14 @@ public class ConditionBar extends LinearLayout{
         typedArray.recycle();
     }
 
+    // Condition Update
+    public void onConditionUpdate(String temperature, String illumination, String turbidity)
+    {
+        texttemperature.setText(temperature);
+        textlight.setText(illumination);
+        textquality.setText(turbidity);
+    }
+
     ////
     // Getter, Setter
     ////

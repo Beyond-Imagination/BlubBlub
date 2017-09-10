@@ -12,6 +12,7 @@ import android.widget.Button;
 import beyond_imagination.blubblub.pChatting.ChattingLayout;
 import beyond_imagination.blubblub.pConditionBar.ConditionBar;
 import beyond_imagination.blubblub.pSetting.SettingButton;
+import beyond_imagination.blubblub.pWebConnection.NetworkTask;
 import beyond_imagination.blubblub.pWebView.MainWebView;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,11 +35,17 @@ public class MainActivity extends AppCompatActivity {
     // Code value
     private final static int SETTING_CALL = 1000;
 
+    // WebConnection
+    private NetworkTask networkTask;
+
     /*** Function ***/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        networkTask = new NetworkTask();
+        networkTask.execute(this);
 
         setting = new Setting();
 
@@ -118,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    // Condition Update
+    public void onConditionUpdate(String temperature, String illumination, String turbidity) {
+        conditionBar.onConditionUpdate(temperature, illumination, turbidity);
     }
 
     ////
