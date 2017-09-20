@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ConditionBar">
+        <attr name="feed_img" format="reference|integer" />
+        <attr name="temperature_img" format="reference|integer" />
+        <attr name="quality_img" format="reference|integer" />
+        <attr name="light_img" format="reference|integer" />
+    </declare-styleable>
+
+</resources>
