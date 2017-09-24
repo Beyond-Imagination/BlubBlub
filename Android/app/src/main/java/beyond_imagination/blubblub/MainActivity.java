@@ -22,6 +22,7 @@ import beyond_imagination.blubblub.pChatting.ChattingLayout;
 import beyond_imagination.blubblub.pChatting.SecretaryService;
 import beyond_imagination.blubblub.pConditionBar.ConditionBar;
 import beyond_imagination.blubblub.pConditionBar.ControlMessage;
+import beyond_imagination.blubblub.pService.FCMMessagingService;
 import beyond_imagination.blubblub.pSetting.SettingButton;
 import beyond_imagination.blubblub.pWebConnection.ControlRequest;
 import beyond_imagination.blubblub.pWebConnection.GetConditionData;
@@ -320,6 +321,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessageToChatbot(String message) {
             new SendToChatbot("163.152.219.171", 8002, message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent = getIntent();
+        if(intent.getExtras() != null) {
+            Log.d("asdfasdf", "정보 받았당~" + intent.getExtras());
+            String type = intent.getExtras().getString("type");
+            Log.d("asdfasdf", type);
+            String body = intent.getExtras().getString("body");
+            Log.d("asdfasdf", body);
+
+            onControlMessage(type, body);
+        }
     }
 
     ////
