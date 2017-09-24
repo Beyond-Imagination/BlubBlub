@@ -54,10 +54,10 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks{
 
     GoogleAccountCredential mCredential;
 
-    static final int REQUEST_ACCOUNT_PICKER = 1004;
-    static final int REQUEST_AUTHORIZATION = 1005;
-    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1006;
-    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1007;
+    static final int REQUEST_ACCOUNT_PICKER = 1006;
+    static final int REQUEST_AUTHORIZATION = 1007;
+    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1008;
+    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1009;
 
     private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";

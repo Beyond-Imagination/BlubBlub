@@ -162,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
         //asdf.start();
        // networkTask = new NetworkTask();
         //networkTask.execute(this);
-        //getConditionData = new GetConditionData(this);
-        //getConditionData.start();
+        getConditionData = new GetConditionData(this);
+        getConditionData.start();
 
         animationManager = new AnimationManager(this);
 
@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("asdfasdf", "akakakakakak");
         switch (requestCode) {
             case SETTING_CALL:
                 if (resultCode == RESULT_OK) {
@@ -243,7 +244,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
+                Log.d("asdfasdf", "akakakakakak");
                 if (resultCode == RESULT_OK && data != null && data.getExtras() != null) {
+                    Log.d("asdfasdf", "akakakakakak");
                     String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
                         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
