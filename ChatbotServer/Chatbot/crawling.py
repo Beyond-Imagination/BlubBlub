@@ -4,16 +4,17 @@ from data import Data
 
 
 class Crawling():
-    url = "http://163.152.219.170:8000/sensor/"
 
     def __init__(self):
-        self.res = urllib.request.urlopen(self.url)
+        self.url = "http://163.152.219.170:8000/sensor/"
 
     def getData(self):
-        soup = BeautifulSoup(self.res, "html.parser")
+        res = urllib.request.urlopen(self.url)
+        soup = BeautifulSoup(res, "html.parser")
 
         list = soup.select("p")
-        Data.temperature = list[0].string
-        Data.illuminance = list[1].string
-        Data.turbidity = list[2].string
-
+        print(list)
+        Data.temperature = int(list[0].string)
+        Data.illuminance = int(list[1].string)
+        Data.turbidity = int(list[2].string)
+        Data.time = int(list[3].string)
