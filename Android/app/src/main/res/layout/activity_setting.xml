@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:text="조도" />
 
-    <beyond_imagination.blubblub.pSetting.LuxSpinner
+    <beyond_imagination.blubblub.pSetting.IlluminationSpinner
         android:id="@+id/luxspinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

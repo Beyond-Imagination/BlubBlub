@@ -16,7 +16,6 @@ import beyond_imagination.blubblub.MainActivity;
  */
 
 public class MainWebView extends WebView{
-
     /*** Variable ***/
     MainActivity mainActivity;
 
@@ -39,7 +38,7 @@ public class MainWebView extends WebView{
         getSettings().setJavaScriptEnabled(true);
 
         // 임시로 naver url로 설정.
-        //loadUrl("http://www.naver.com");
+        loadUrl("http://163.152.219.170:8001/javascript_simple.html");
     }
 
     @Override

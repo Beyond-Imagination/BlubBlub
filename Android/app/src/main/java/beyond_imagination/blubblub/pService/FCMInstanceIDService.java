@@ -31,6 +31,7 @@ public class FCMInstanceIDService extends FirebaseInstanceIdService {
 
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
+        Log.d("qqqqqq", "token" + token);
 
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
@@ -38,10 +39,7 @@ public class FCMInstanceIDService extends FirebaseInstanceIdService {
                 .build();
 
         //request
-        Request request = new Request.Builder()
-                .url("http://163.152.219.167/fcm/register.php")
-                .post(body)
-                .build();
+        Request request = new Request.Builder().url("http://163.152.219.167/fcm/register.php").post(body).build();
 
         try {
             client.newCall(request).execute();
@@ -50,5 +48,4 @@ public class FCMInstanceIDService extends FirebaseInstanceIdService {
         }
 
     }
-
 }

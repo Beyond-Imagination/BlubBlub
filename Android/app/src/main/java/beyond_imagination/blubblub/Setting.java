@@ -1,7 +1,9 @@
 package beyond_imagination.blubblub;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by cru65 on 2017-08-02.
@@ -17,16 +19,16 @@ public class Setting implements Parcelable{
     private int tmp_max;
     private int tmp_min;
     // 조도
-    private int lux_max;
+    private int illum_min;
 
     /*** Function ***/
     public Setting()
     {
         auto = false;
-        feed_cycle = 1;
+        feed_cycle = 6;
         tmp_max = 25;
         tmp_min = 20;
-        lux_max = 0;
+        illum_min = 0;
     }
 
     protected Setting(Parcel in) {
@@ -34,7 +36,7 @@ public class Setting implements Parcelable{
         feed_cycle = in.readInt();
         tmp_max = in.readInt();
         tmp_min = in.readInt();
-        lux_max = in.readInt();
+        illum_min = in.readInt();
     }
 
     // 접근자 잘 해줘야 한다.
@@ -61,7 +63,7 @@ public class Setting implements Parcelable{
         dest.writeInt(feed_cycle);
         dest.writeInt(tmp_max);
         dest.writeInt(tmp_min);
-        dest.writeInt(lux_max);
+        dest.writeInt(illum_min);
     }
 
     /////
@@ -99,11 +101,11 @@ public class Setting implements Parcelable{
         this.tmp_min = tmp_min;
     }
 
-    public int getLux_max() {
-        return lux_max;
+    public int getIllum_min() {
+        return illum_min;
     }
 
-    public void setLux_max(int lux_max) {
-        this.lux_max = lux_max;
+    public void setIllum_min(int lux_max) {
+        this.illum_min = lux_max;
     }
 }

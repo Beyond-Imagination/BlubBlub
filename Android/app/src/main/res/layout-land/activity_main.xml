@@ -7,6 +7,11 @@
     tools:context="beyond_imagination.blubblub.MainActivity">
 
     <!-- WebView -->
+
+    <!-- Condition Bar -->
+    <!-- Controll Alpha value for clearness -->
+
+    <!-- Chatting Layout -->
     <beyond_imagination.blubblub.pWebView.MainWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
@@ -14,24 +19,9 @@
 
     </beyond_imagination.blubblub.pWebView.MainWebView>
 
-    <!-- Condition Bar -->
-    <!-- Controll Alpha value for clearness -->
-    <beyond_imagination.blubblub.pConditionBar.ConditionBar
-        class="beyond_imagination.blubblub.pConditionBar.Condition"
-        android:id="@+id/conditionbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:feed_img="@mipmap/ic_launcher"
-        app:temperature_img="@mipmap/ic_launcher"
-        app:quality_img="@mipmap/ic_launcher"
-        app:light_img="@mipmap/ic_launcher">
-
-    </beyond_imagination.blubblub.pConditionBar.ConditionBar>
-
-    <!-- Chatting Layout -->
     <beyond_imagination.blubblub.pChatting.ChattingLayout
         android:id="@+id/chatting"
-        android:layout_width="247dp"
+        android:layout_width="285dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:background="#FFFFFF00"
@@ -40,7 +30,27 @@
 
     </beyond_imagination.blubblub.pChatting.ChattingLayout>
 
+    <beyond_imagination.blubblub.pConditionBar.ConditionBar
+        android:id="@+id/conditionbar"
+        class="beyond_imagination.blubblub.pConditionBar.Condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:feed_img="@mipmap/ic_launcher"
+        app:light_img="@mipmap/ic_launcher"
+        app:quality_img="@mipmap/ic_launcher"
+        app:temperature_img="@mipmap/ic_launcher">
 
+    </beyond_imagination.blubblub.pConditionBar.ConditionBar>
+
+        <beyond_imagination.blubblub.pConditionBar.ControlMessage
+            android:id="@+id/controlview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:visibility="invisible"
+            >
+
+        </beyond_imagination.blubblub.pConditionBar.ControlMessage>
 
 
 </FrameLayout>

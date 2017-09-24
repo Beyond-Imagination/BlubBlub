@@ -19,7 +19,7 @@ public class SettingActivity extends AppCompatActivity {
     private FeedCycleSpinner feedCycleSpinner;
     private MaxTempSpinner maxTempSpinner;
     private MinTempSpinner minTempSpinner;
-    private LuxSpinner luxSpinner;
+    private IlluminationSpinner luxSpinner;
     private SaveButton saveButton;
     private CancelButton cancelButton;
 
@@ -33,7 +33,7 @@ public class SettingActivity extends AppCompatActivity {
         feedCycleSpinner = (FeedCycleSpinner) findViewById(R.id.feedcyclespinner);
         maxTempSpinner = (MaxTempSpinner) findViewById(R.id.maxtempspinner);
         minTempSpinner = (MinTempSpinner) findViewById(R.id.mintempspinner);
-        luxSpinner = (LuxSpinner) findViewById(R.id.luxspinner);
+        luxSpinner = (IlluminationSpinner) findViewById(R.id.luxspinner);
         saveButton = (SaveButton) findViewById(R.id.savebtn);
         cancelButton = (CancelButton) findViewById(R.id.cancelBtn);
 
@@ -48,7 +48,7 @@ public class SettingActivity extends AppCompatActivity {
         feedCycleSpinner.setFeedCycle(setting.getFeed_cycle());
         maxTempSpinner.setMaxTemp(setting.getTmp_max());
         minTempSpinner.setMinTemp(setting.getTmp_min());
-        luxSpinner.setLuxMax(setting.getLux_max());
+        luxSpinner.setLuxMax(setting.getIllum_min());
     }
 
     ////
