@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sensor.apps.SensorConfig',
+    'authenticate.apps.AuthenticateConfig',
 ]
 
 MIDDLEWARE = [
