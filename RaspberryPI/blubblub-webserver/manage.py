@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import os
 import sys
-from sensor.temperature import TemperatureSensor
-from sensor import sensors
+#from sensor.temperature import TemperatureSensor
+#from sensor import sensors
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blubblub.settings")
@@ -22,8 +22,6 @@ if __name__ == "__main__":
             )
         raise
 
-#    ts = TemperatureSensor()
-#    ts.start()
-    s = sensors.Sensors()
-    s.start()
+#    s = sensors.Sensors()
+#    s.start()
     execute_from_command_line(sys.argv)

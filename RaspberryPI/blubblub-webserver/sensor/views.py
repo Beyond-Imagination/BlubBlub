@@ -15,10 +15,7 @@ def showData(request):
 
 @ensure_csrf_cookie
 def feeding(request):
-#    runMotor()
-#    motor = FeedingMotor()
     run()
-#    motor.start()
     context={'time':1}
     return render(request, 'sensor/feeding.html', context)
     
