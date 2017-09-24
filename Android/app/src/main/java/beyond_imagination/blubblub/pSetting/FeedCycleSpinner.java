@@ -31,10 +31,10 @@ public class FeedCycleSpinner extends android.support.v7.widget.AppCompatSpinner
     }
 
     private void init() {
-        items = new Integer[12];
+        items = new Integer[7];
 
-        for (int i = 0; i < 12; i++) {
-            items[i] = i + 1;
+        for (int i = 0; i < 7; i++) {
+            items[i] = i+6;
         }
 
         adapter = new ArrayAdapter<Integer>(settingActivity, android.R.layout.simple_spinner_item, items);
@@ -55,6 +55,6 @@ public class FeedCycleSpinner extends android.support.v7.widget.AppCompatSpinner
     }
 
     void setFeedCycle(int feedCycle) {
-        setSelection(feedCycle - 1);
+        setSelection(feedCycle - 6);
     }
 }

@@ -11,20 +11,20 @@ import android.widget.Spinner;
  * Created by cru65 on 2017-08-04.
  */
 
-public class LuxSpinner extends android.support.v7.widget.AppCompatSpinner {
+public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpinner {
     /*** Variable ***/
     SettingActivity settingActivity;
     private ArrayAdapter<Integer> adapter;
     private Integer[] items;
 
     /*** Function ***/
-    public LuxSpinner(Context context) {
+    public IlluminationSpinner(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
 
     }
 
-    public LuxSpinner(Context context, AttributeSet attrs) {
+    public IlluminationSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
         settingActivity = (SettingActivity)context;
 
@@ -44,7 +44,7 @@ public class LuxSpinner extends android.support.v7.widget.AppCompatSpinner {
         setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                settingActivity.getSetting().setLux_max(items[position]);
+                settingActivity.getSetting().setIllum_min(items[position]);
             }
 
             @Override

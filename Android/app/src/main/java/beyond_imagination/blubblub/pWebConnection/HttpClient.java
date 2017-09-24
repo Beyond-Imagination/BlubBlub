@@ -2,6 +2,8 @@ package beyond_imagination.blubblub.pWebConnection;
 
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,11 +49,24 @@ public class HttpClient {
 
     public void request(){
         HttpURLConnection conn = getConnection();
+        if(conn == null)
+            Log.d("asdfasdf", "request null 입니다.");
         setHeader(conn);
         setBody(conn);
         httpStatusCode = getStatusCode(conn);
         Log.d("asdfasdf-code", Integer.toString(httpStatusCode));
         body = readStream(conn);
+        conn.disconnect();
+    }
+
+    public void access()
+    {
+        HttpURLConnection conn = getConnection();
+        try {
+            conn.getResponseCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         conn.disconnect();
     }
 
@@ -72,7 +87,7 @@ public class HttpClient {
         setRequestMethod(connection);
 
         connection.setConnectTimeout(5000);
-        connection.setDoOutput(false);
+        connection.setDoOutput(true);
         connection.setDoInput(true);
     }
 
