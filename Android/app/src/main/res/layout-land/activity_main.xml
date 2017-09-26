@@ -15,42 +15,42 @@
     <beyond_imagination.blubblub.pWebView.MainWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|center_horizontal">
 
     </beyond_imagination.blubblub.pWebView.MainWebView>
-
-    <beyond_imagination.blubblub.pChatting.ChattingLayout
-        android:id="@+id/chatting"
-        android:layout_width="285dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="right"
-        android:background="#FFFFFF00"
-        android:orientation="vertical"
-        android:visibility="invisible">
-
-    </beyond_imagination.blubblub.pChatting.ChattingLayout>
 
     <beyond_imagination.blubblub.pConditionBar.ConditionBar
         android:id="@+id/conditionbar"
         class="beyond_imagination.blubblub.pConditionBar.Condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:feed_img="@mipmap/ic_launcher"
-        app:light_img="@mipmap/ic_launcher"
-        app:quality_img="@mipmap/ic_launcher"
-        app:temperature_img="@mipmap/ic_launcher">
+        app:feed_img="@drawable/empty"
+        app:light_img="@drawable/empty"
+        app:quality_img="@drawable/empty"
+        app:temperature_img="@drawable/empty">
 
     </beyond_imagination.blubblub.pConditionBar.ConditionBar>
 
-        <beyond_imagination.blubblub.pConditionBar.ControlMessage
-            android:id="@+id/controlview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:visibility="invisible"
-            >
+    <beyond_imagination.blubblub.pChatting.ChattingLayout
+        android:id="@+id/chatting"
+        android:layout_width="285dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:orientation="vertical"
+        android:background="#FFFFFFFF"
+        android:visibility="invisible">
 
-        </beyond_imagination.blubblub.pConditionBar.ControlMessage>
+    </beyond_imagination.blubblub.pChatting.ChattingLayout>
+
+    <beyond_imagination.blubblub.pConditionBar.ControlMessage
+        android:id="@+id/controlview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="invisible">
+
+    </beyond_imagination.blubblub.pConditionBar.ControlMessage>
 
 
 </FrameLayout>
