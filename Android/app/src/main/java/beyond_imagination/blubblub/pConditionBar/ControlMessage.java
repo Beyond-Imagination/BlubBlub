@@ -76,16 +76,13 @@ public class ControlMessage extends LinearLayout {
                     //ControlRequest controlRequest = new ControlRequest("163.152.219.170", 8000,"token="+FirebaseInstanceId.getInstance().getToken() , new ContentValues());
                     //controlRequest.start();
                     mainActivity.sendRequestToBowl("먹이");
-                    setVisibility(INVISIBLE);
                 } else if (type.equals("더움")) {
-                    setVisibility(INVISIBLE);
                 }else if (type.equals("추움")) {
-                    setVisibility(INVISIBLE);
                 }else if (type.equals("어두움")) {
-                    setVisibility(INVISIBLE);
                 }else if (type.equals("탁함")) {
-                    setVisibility(INVISIBLE);
                 }
+
+                setVisibility(INVISIBLE);
             }
         });
 

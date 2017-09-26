@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/icon_repeat"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/chatting_sendText"
+        android:id="@+id/chatting_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SendMessage"
-        android:layout_weight="1"/>
+        android:layout_weight="0"
+        android:gravity="center_horizontal"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/chatting_receiveText"
+        android:id="@+id/chatting_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ReceivedMessage"
-        android:layout_weight="1"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:scrollbars="vertical"
+        android:selectAllOnFocus="false" />
 
-    <EditText
-        android:id="@+id/chatting_input"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:layout_gravity="bottom"
+        android:background="#CC87CEEB"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/chatting_btn_send"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        <EditText
+            android:id="@+id/chatting_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/chatting_btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter" />
+    </LinearLayout>
 </LinearLayout>

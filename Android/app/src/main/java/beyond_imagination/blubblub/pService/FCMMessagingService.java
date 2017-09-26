@@ -63,5 +63,8 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
     // 어떤 상태이상인지 확인.
     public void receiData(String type, String body) {
         ((MainActivity) MainActivity.getInstance()).onControlMessage(type, body);
+
+        if (type.equals("먹이"))
+            ((MainActivity) MainActivity.getInstance()).countAccumulate();
     }
 }

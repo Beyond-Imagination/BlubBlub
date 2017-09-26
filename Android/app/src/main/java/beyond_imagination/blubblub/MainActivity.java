@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private ChattingLayout chattingLayout;
     private ConditionBar conditionBar;
 
+    // 알림 축적
+    int accumulateCount;
+
     // Identity Data
     private DataHandler dataHandler;
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private ControlMessage controlMessage;
 
     // Secretary Service
-    private SecretaryService secretaryService;
+    //private SecretaryService secretaryService;
 
     // FCM에서 접근할 변수
     private static MainActivity mainActivity;
@@ -105,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
                     controlMessage.setVisibility(View.VISIBLE);
                     break;
                 case SEND_MESSAGE:
-                    chattingLayout.sendMessage(bundle.getString("body"));
+                    chattingLayout.sendMessage("나 : " + bundle.getString("body"));
                     Log.d("qqqqqqqq", bundle.getString("body"));
                     break;
                 case RECEIVE_MESSAGE:
-                    chattingLayout.receiveMessage(bundle.getString("body"));
+                    chattingLayout.receiveMessage("붕어 : " +bundle.getString("body"));
                     Log.d("qqqqqqqq", bundle.getString("body"));
                     break;
 
@@ -125,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        accumulateCount = 0;
+
         mainWebView = (MainWebView) findViewById(R.id.webView);
         chattingLayout = (ChattingLayout) findViewById(R.id.chatting);
         conditionBar = (ConditionBar) findViewById(R.id.conditionbar);
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         setting = new Setting();
 
-        secretaryService = new SecretaryService(this, chattingLayout.getEditText());
+        //secretaryService = new SecretaryService(this, chattingLayout.getEditText());
 
         dataHandler = new DataHandler(FirebaseInstanceId.getInstance().getToken(), "Beyond_Imagination");
 
@@ -142,29 +147,10 @@ public class MainActivity extends AppCompatActivity {
         mainActivity = this;
         fcmHandler = new FCMHandler();
 
-        Thread asdf = new Thread(){
-            long time = System.currentTimeMillis();
-            long temp = 0;
-            @Override
-            public void run() {
-                while(true) {
-
-                    if ((time - temp) > 10000);
-                    {
-                        new NetworkTask().execute(this);
-
-                        temp = time;
-                    }
-                }
-            }
-
-
-        };
-        //asdf.start();
-       // networkTask = new NetworkTask();
-        //networkTask.execute(this);
-        getConditionData = new GetConditionData(this);
-        getConditionData.start();
+        networkTask = new NetworkTask();
+        networkTask.execute(this);
+        //getConditionData = new GetConditionData(this);
+        //getConditionData.start();
 
         animationManager = new AnimationManager(this);
 
@@ -192,12 +178,12 @@ public class MainActivity extends AppCompatActivity {
                 xFirst = e1.getX();
                 xLast = e2.getX();
                 if (chattingLayout.getVisibility() == View.INVISIBLE) {
-                    if (xFirst > xLast) {
+                    if (xFirst - 100 > xLast) {
                         chattingLayout.startAnimation(animationManager.chattinglayout_open);
                         chattingLayout.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    if (xFirst < xLast) {
+                    if (xFirst + 100 < xLast) {
                         chattingLayout.startAnimation(animationManager.chattinglayout_close);
                         chattingLayout.setVisibility(View.INVISIBLE);
                     }
@@ -254,14 +240,14 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
-                        secretaryService.getmCredential().setSelectedAccountName(accountName);
-                        secretaryService.getScheduleData();
+                        chattingLayout.getSecretaryService().getmCredential().setSelectedAccountName(accountName);
+                        chattingLayout.getSecretaryService().getScheduleData();
                     }
                 }
                 break;
             case REQUEST_AUTHORIZATION:
                 if (resultCode == RESULT_OK) {
-                    secretaryService.getScheduleData();
+                    chattingLayout.getSecretaryService().getScheduleData();
                 }
                 break;
         }
@@ -316,6 +302,11 @@ public class MainActivity extends AppCompatActivity {
             new SendToBowl(method, dataHandler.sendIdentity("bowl"));
         } else  {
             new SendToBowl(method, dataHandler.SendToken("bowl"));
+
+            if (method.equals("먹이")) {
+                conditionBar.controllFeedBtn(false);
+                countInitialize();
+            }
         }
     }
 
@@ -336,6 +327,15 @@ public class MainActivity extends AppCompatActivity {
 
             onControlMessage(type, body);
         }
+    }
+
+    public void countAccumulate()
+    {
+        accumulateCount++;
+    }
+
+    public void countInitialize(){
+        accumulateCount = 0;
     }
 
     ////
@@ -361,7 +361,5 @@ public class MainActivity extends AppCompatActivity {
         return dataHandler;
     }
 
-    public SecretaryService getSecretaryService() {
-        return secretaryService;
-    }
+
 }

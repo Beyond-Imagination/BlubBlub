@@ -43,20 +43,20 @@ public class ConditionBar extends LinearLayout {
     /*** Function ***/
     public ConditionBar(Context context) {
         super(context);
-        mainActivity = (MainActivity)context;
+        mainActivity = (MainActivity) context;
         init();
     }
 
     public ConditionBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        mainActivity = (MainActivity)context;
+        mainActivity = (MainActivity) context;
         init();
         getAttrs(attrs);
     }
 
     public ConditionBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mainActivity = (MainActivity)context;
+        mainActivity = (MainActivity) context;
         init();
         getAttrs(attrs, defStyleAttr);
     }
@@ -133,12 +133,12 @@ public class ConditionBar extends LinearLayout {
         int time = (hour * 60) + min;
 
         // 1시간 전 부터 먹이 주기 가능
-        if((time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() - 1) * 60)
+        if ((time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() - 1) * 60)
             feedbtn.setEnabled(true);
 
         String showtime;
-        showtime = (Integer.valueOf(feedtime)/60)+":";
-        if(Integer.valueOf(feedtime)%60 < 10)
+        showtime = (Integer.valueOf(feedtime) / 60) + ":";
+        if (Integer.valueOf(feedtime) % 60 < 10)
             showtime += "0" + (Integer.valueOf(feedtime) % 60);
         else
             showtime += (Integer.valueOf(feedtime) % 60);
@@ -151,15 +151,27 @@ public class ConditionBar extends LinearLayout {
         textlight.setText(illumination);
 
         // turbidity
-        /*
-        if (Integer.valueOf(turbidity) == 0) {
+
+        if (Float.valueOf(turbidity) == 0.0) {
             textquality.setText("좋음");
-        } else if (Integer.valueOf(turbidity) == 1) {
+        } else if (Float.valueOf(turbidity) == 1.0) {
             textquality.setText("보통");
         } else {
             textquality.setText("나쁨");
         }
-        */
+
+    }
+
+    public void controllFeedBtn(boolean order) {
+        if (order == true) {
+            if (feedbtn.getVisibility() == View.INVISIBLE) {
+                feedbtn.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (feedbtn.getVisibility() == View.VISIBLE) {
+                feedbtn.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     ////
@@ -198,4 +210,7 @@ public class ConditionBar extends LinearLayout {
         this.imagelight = imagelight;
     }
 
+    public Button getFeedbtn() {
+        return feedbtn;
+    }
 }

@@ -21,13 +21,13 @@ public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpin
     public IlluminationSpinner(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
-
+        init();
     }
 
     public IlluminationSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
         settingActivity = (SettingActivity)context;
-
+        init();
     }
 
     private void init(){
