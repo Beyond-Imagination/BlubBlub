@@ -100,7 +100,6 @@ public class DataHandler {
     ////
     // Getter and Setter
     ////
-
     public String getToken() {
         return token;
     }

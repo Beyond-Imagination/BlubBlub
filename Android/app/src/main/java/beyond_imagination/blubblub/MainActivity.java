@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,14 +18,10 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import beyond_imagination.blubblub.pChatting.ChattingLayout;
-import beyond_imagination.blubblub.pChatting.SecretaryService;
-import beyond_imagination.blubblub.pConditionBar.ConditionBar;
-import beyond_imagination.blubblub.pConditionBar.ControlMessage;
-import beyond_imagination.blubblub.pService.FCMMessagingService;
+import beyond_imagination.blubblub.pCondition.ConditionBar;
+import beyond_imagination.blubblub.pCondition.ControlMessage;
 import beyond_imagination.blubblub.pSetting.SettingButton;
-import beyond_imagination.blubblub.pWebConnection.ControlRequest;
 import beyond_imagination.blubblub.pWebConnection.GetConditionData;
-import beyond_imagination.blubblub.pWebConnection.NetworkTask;
 import beyond_imagination.blubblub.pWebConnection.SendToBowl;
 import beyond_imagination.blubblub.pWebConnection.SendToChatbot;
 import beyond_imagination.blubblub.pWebView.MainWebView;
@@ -71,14 +66,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] SCOPES = {CalendarScopes.CALENDAR_READONLY};
 
     // WebConnection
-    private NetworkTask networkTask;
     private GetConditionData getConditionData;
 
     // ControlMessage
     private ControlMessage controlMessage;
-
-    // Secretary Service
-    //private SecretaryService secretaryService;
 
     // FCM에서 접근할 변수
     private static MainActivity mainActivity;
@@ -98,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
 
             bundle = msg.getData();
-            //Log.d("qqqqqqqq", bundle.getString("body"));
+
             switch (msg.what) {
                 case UPDATE_CONDITION:
                     conditionBar.onConditionUpdate(bundle.getString("feedtime"), bundle.getString("temperature"), bundle.getString("illumination"), bundle.getString("turbidity"));
@@ -138,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
         setting = new Setting();
 
-        //secretaryService = new SecretaryService(this, chattingLayout.getEditText());
-
         dataHandler = new DataHandler(FirebaseInstanceId.getInstance().getToken(), "Beyond_Imagination");
 
         IdentityApplication();
@@ -147,10 +136,8 @@ public class MainActivity extends AppCompatActivity {
         mainActivity = this;
         fcmHandler = new FCMHandler();
 
-        networkTask = new NetworkTask();
-        networkTask.execute(this);
-        //getConditionData = new GetConditionData(this);
-        //getConditionData.start();
+        getConditionData = new GetConditionData();
+        getConditionData.execute(this);
 
         animationManager = new AnimationManager(this);
 
@@ -216,11 +203,8 @@ public class MainActivity extends AppCompatActivity {
             case SETTING_CALL:
                 if (resultCode == RESULT_OK) {
                     setting = data.getExtras().getParcelable("setting");
-
+                    Log.d("asdfasdf", "maxTmp"+setting.getTmp_max());
                     sendMessageToChatbot(dataHandler.sendSetting(setting));
-                    //SendToChatbot sendToChatbot = new SendToChatbot("163.152.219.171", 8002, dataHandler.sendSetting(setting));
-                    //sendToChatbot.start();
-
                 }
                 break;
 
@@ -281,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
             msg.what = SEND_MESSAGE;
         } else if (type.equals("대화")) {
             msg.what = RECEIVE_MESSAGE;
-        } else if (type.equals("먹이") || type.equals("더움") || type.equals("추움") || type.equals("어두움") || type.equals("탁함")) {
+        } else if (type.equals("먹이") || type.equals("더움") || type.equals("추움") || type.equals("어두움")|| type.equals("밝음") || type.equals("탁함")) {
             msg.what = FCM_PROBLEM;
         }
         msg.setData(bundle);

@@ -1,28 +1,45 @@
 package beyond_imagination.blubblub.pWebConnection;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
+
+import java.util.StringTokenizer;
 
 import beyond_imagination.blubblub.MainActivity;
 
 /**
- * Created by cru65 on 2017-09-24.
+ * Created by cru65 on 2017-08-21.
  */
 
-public class GetConditionData extends Thread {
+public class GetConditionData extends AsyncTask<MainActivity, String, String> {
     /*** Variable ***/
     MainActivity mainActivity;
     boolean isRunning = false;
 
     /*** Fungtion ***/
-    public GetConditionData(Context context)
-    {
-        mainActivity = (MainActivity)context;
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
         isRunning = true;
     }
 
     @Override
-    public void run() {
+    protected void onPostExecute(String s) {
+        Log.d("Http_result", s);
+    }
+
+    @Override
+    protected void onProgressUpdate(String... values) {
+        super.onProgressUpdate(values);
+
+        mainActivity.onConditionUpdate(values[0], values[1], values[2], values[3]);
+    }
+
+    @Override
+    protected String doInBackground(MainActivity... params) {
+        mainActivity = params[0];
+
         long time = 0;
         long temp;
 
@@ -42,13 +59,13 @@ public class GetConditionData extends Thread {
         while (isRunning) {
             temp = System.currentTimeMillis();
 
-            if ((temp - time) > 10000) {
+            if ((temp - time) > 1000) {
                 post.request();
-                Log.d("asdfasdf", "실행중입니다");
+
                 int statusCode = post.getHttpStatusCode();
 
                 // 반응이 있을 때만, 텍스트 편집
-                if (statusCode == 200) {
+                if(statusCode == 200) {
                     data = post.getBody();
 
                     // 공백까지 처리하는 split
@@ -64,11 +81,23 @@ public class GetConditionData extends Thread {
                     }
 
                     // 데이터 전송 - AsyncTask의 progressupdate 접근. Main Thread임.
-                    mainActivity.onConditionUpdate(feedtime, temperature, illumination, turbidity);
+                    publishProgress(feedtime, temperature, illumination, turbidity);
                 }
-
                 time = temp;
             }
         }
+
+        return data;
+    }
+
+    ////
+    // Getter, Setter
+    ////
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 }

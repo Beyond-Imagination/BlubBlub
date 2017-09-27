@@ -207,7 +207,7 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
         private List<String> getDataFromApi() throws IOException {
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
-            Events events = mService.events().list("primary").setMaxResults(5).setTimeMin(now).setOrderBy("startTime").setSingleEvents(true).execute();
+            Events events = mService.events().list("primary").setMaxResults(3).setTimeMin(now).setOrderBy("startTime").setSingleEvents(true).execute();
             List<Event> items = events.getItems();
 
             Log.d("asdfadsf", "캘린더 작업중이당~~");
@@ -216,16 +216,6 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
             String priDate = null;
             String temp = null;
             String[] token;
-
-            /*
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
-                if (start == null) {
-                    start = event.getStart().getDate();
-                }
-                eventStrings.add(String.format("%s (%s)", event.getSummary(), start));
-            }
-            */
 
             if (items.size() == 0) {
                 eventStrings.add("     등록된 일정이 없습니다...ㅠㅠ");
@@ -272,7 +262,6 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
             if (output == null || output.size() == 0) {
                 Toast.makeText(mainActivity, "No results returnd", Toast.LENGTH_SHORT).show();
             } else {
-                //output.add(0, "Data retrieved using the Google Calendar API");
                 output.add(0, "----------일  정----------");
                 output.add("--------------------");
                 Toast.makeText(mainActivity, "Data retrieved using the Google Calendar API", Toast.LENGTH_SHORT).show();
@@ -332,6 +321,56 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
                     .setApplicationName("R_D_Location Callendar")
                     .build();
 
+
+            messagePassing(message);
+
+            // 이벤트 정보 등록
+            Event event = new Event().setSummary(summaryData);
+
+            DateTime startDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, startTimeData));
+            EventDateTime start = new EventDateTime().setDateTime(startDateTime);
+            event.setStart(start);
+
+            DateTime endDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, endTimeData));
+            EventDateTime end = new EventDateTime().setDateTime(endDateTime);
+            event.setEnd(end);
+
+            String calendarId = "primary";
+            try {
+                event = service.events().insert(calendarId, event).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Log.d("asdfasdf", "EventCreate : " + event.getHtmlLink());
+
+            return event.getHtmlLink();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (result == null) {
+                mainActivity.onControlMessage("대화", "일정 정보가 부족합니다.\\n년, 월, 일, 시작시간, 끝나는시간, \"내용\"을 말해주세요");
+            } else {
+                mainActivity.onControlMessage("대화", "일정이 등록되었습니다~ 굿굿!");
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        private void messagePassing(String message)
+        {
             // 데이터 파싱
             String[] token;
             String[] token2;
@@ -387,68 +426,6 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
                         endTimeData = ""+endtime;
                 }
             }
-
-            Log.d("asdfasdf", " " + yearData +" " + monthData +" " + dayData +" " + startTimeData +" " + duringTimeData +" " + endTimeData+" " + summaryData);
-
-
-            // 이벤트 정보 등록
-            //Event event = new Event().setSummary("Google I/O 2015").setLocation("800 Howard St., San Francisco, CA 94103").setDescription("A chance to hear more about Google's developer products.");
-
-            Event event = new Event().setSummary(summaryData);
-
-            DateTime startDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, startTimeData));
-            EventDateTime start = new EventDateTime().setDateTime(startDateTime);
-            event.setStart(start);
-
-            DateTime endDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, endTimeData));
-            EventDateTime end = new EventDateTime().setDateTime(endDateTime);
-            event.setEnd(end);
-
-            /*
-            DateTime startDateTime = new DateTime("2017-09-28T09:00:00-07:00");
-            EventDateTime start = new EventDateTime()
-                    .setDateTime(startDateTime)
-                    .setTimeZone("America/Los_Angeles");
-            event.setStart(start);
-
-            DateTime endDateTime = new DateTime("2017-09-28T17:00:00-07:00");
-            EventDateTime end = new EventDateTime()
-                    .setDateTime(endDateTime)
-                    .setTimeZone("America/Los_Angeles");
-            event.setEnd(end);
-            */
-            String calendarId = "primary";
-            try {
-                event = service.events().insert(calendarId, event).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Log.d("asdfasdf", "EventCreate : " + event.getHtmlLink());
-
-            return event.getHtmlLink();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            if (result == null) {
-                mainActivity.onControlMessage("대화", "일정 정보가 부족합니다.\\n년, 월, 일, 시작시간, 끝나는시간, \"내용\"을 말해주세요");
-            } else {
-                mainActivity.onControlMessage("대화", "일정이 등록되었습니다~ 굿굿!");
-            }
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
         }
     }
 

@@ -33,12 +33,12 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
         Log.d("asdfasdf", "onMessageReceived 실행");
 
         if (remoteMessage.getData().get("type").equals("대화") == false) {
-            receiNotification(remoteMessage.getData().get("body"));
+            receiveNotification(remoteMessage.getData().get("body"));
         }
-        receiData(remoteMessage.getData().get("type"), remoteMessage.getData().get("body"));
+        receiveData(remoteMessage.getData().get("type"), remoteMessage.getData().get("body"));
     }
 
-    private void receiNotification(String messageBody) {
+    private void receiveNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -47,8 +47,8 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("FCM Push Test")
+                .setSmallIcon(R.drawable.main_icon)
+                .setContentTitle("상태를 확인해주세요!")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -61,7 +61,7 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
     }
 
     // 어떤 상태이상인지 확인.
-    public void receiData(String type, String body) {
+    private void receiveData(String type, String body) {
         ((MainActivity) MainActivity.getInstance()).onControlMessage(type, body);
 
         if (type.equals("먹이"))

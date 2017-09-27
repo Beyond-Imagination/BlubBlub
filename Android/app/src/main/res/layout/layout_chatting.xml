@@ -15,14 +15,22 @@
         android:gravity="center_horizontal"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/chatting_text"
+    <ScrollView
+        android:id="@+id/chatting_text_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="bottom"
-        android:scrollbars="vertical"
-        android:selectAllOnFocus="false" />
+        >
+
+        <TextView
+            android:id="@+id/chatting_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:scrollIndicators="bottom"
+            android:scrollbars="vertical"
+            android:selectAllOnFocus="false" />
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

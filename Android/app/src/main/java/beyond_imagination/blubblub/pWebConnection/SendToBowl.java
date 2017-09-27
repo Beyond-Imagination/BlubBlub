@@ -15,15 +15,12 @@ import java.net.URL;
 
 public class SendToBowl extends Thread {
     /*** Variable ***/
-    String method;
+    String type;
     String data;
 
-    HttpClient.Builder http;
-    HttpClient client;
-
     /*** Function ***/
-    public SendToBowl(String method, String data) {
-        this.method = method;
+    public SendToBowl(String type, String data) {
+        this.type = type;
         this.data = data;
 
         start();
@@ -31,13 +28,15 @@ public class SendToBowl extends Thread {
 
     @Override
     public void run() {
-        if(method.equals("인증")) {
+        if(type.equals("인증")) {
             getConnection("http://163.152.219.170:8000/register/");
-        } else if (method.equals("먹이")) {
+        } else if (type.equals("먹이")) {
             Log.d("asdfadsf", "sendtobowl");
             getConnection("http://163.152.219.170:8000/feeding/");
-        } else if (method.equals("조도")) {
-            //getConnection("http://163.152.219.170:8000/feeding/");
+        } else if (type.equals("어두움")) {
+            getConnection("163.152.219.170:8000/ledOn");
+        } else if (type.equals("밝음")) {
+            getConnection("163.152.219.170:8000/ledOff");
         }
     }
 

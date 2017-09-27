@@ -1,6 +1,5 @@
-package beyond_imagination.blubblub.pConditionBar;
+package beyond_imagination.blubblub.pCondition;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -11,15 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import org.w3c.dom.Text;
-
 import beyond_imagination.blubblub.MainActivity;
 import beyond_imagination.blubblub.R;
-import beyond_imagination.blubblub.pWebConnection.ControlRequest;
-import beyond_imagination.blubblub.pWebConnection.HttpClient;
-import beyond_imagination.blubblub.pWebConnection.SendToBowl;
 
 /**
  * Created by cru65 on 2017-09-18.
@@ -71,17 +63,8 @@ public class ControlMessage extends LinearLayout {
             public void onClick(View v) {
 
                 Log.d("asdfasdf", type);
-                if(type.equals("먹이")){
-                    //ControlRequest controlRequest = new ControlRequest("http://163.152.219.170:8000/feeding/", FirebaseInstanceId.getInstance().getToken());
-                    //ControlRequest controlRequest = new ControlRequest("163.152.219.170", 8000,"token="+FirebaseInstanceId.getInstance().getToken() , new ContentValues());
-                    //controlRequest.start();
-                    mainActivity.sendRequestToBowl("먹이");
-                } else if (type.equals("더움")) {
-                }else if (type.equals("추움")) {
-                }else if (type.equals("어두움")) {
-                }else if (type.equals("탁함")) {
-                }
 
+                sendMesssage();
                 setVisibility(INVISIBLE);
             }
         });
@@ -92,6 +75,23 @@ public class ControlMessage extends LinearLayout {
                 setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    private void sendMesssage()
+    {
+        if(type.equals("먹이")){
+            mainActivity.sendRequestToBowl("먹이");
+        } else if (type.equals("더움")) {
+            // 온도 조절 추가 예정
+        }else if (type.equals("추움")) {
+            // 온도 조절 추가 예정
+        }else if (type.equals("어두움")) {
+            mainActivity.sendRequestToBowl("어두움");
+        } else if (type.equals("밝음")) {
+            mainActivity.sendRequestToBowl("밝음");
+        } else if (type.equals("탁함")) {
+            // 탁도 조절 추가 예정
+        }
     }
 
     public void onUpdate(String type, String body) {

@@ -59,17 +59,6 @@ public class HttpClient {
         conn.disconnect();
     }
 
-    public void access()
-    {
-        HttpURLConnection conn = getConnection();
-        try {
-            conn.getResponseCode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        conn.disconnect();
-    }
-
     private HttpURLConnection getConnection() {
         try {
             URL url = new URL(builder.getUrl());

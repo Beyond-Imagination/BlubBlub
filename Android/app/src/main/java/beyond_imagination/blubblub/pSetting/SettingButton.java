@@ -13,7 +13,7 @@ import beyond_imagination.blubblub.MainActivity;
  * Created by cru65 on 2017-08-03.
  */
 
-public class SettingButton extends android.support.v7.widget.AppCompatButton{
+public class SettingButton extends android.support.v7.widget.AppCompatImageView{
     /*** Variable ***/
     MainActivity mainActivity;
     AttributeSet attrs;
