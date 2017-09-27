@@ -2,7 +2,7 @@ from threading import Thread
 from crawling import Crawling
 from fcmRequest import FCMRequest
 from data import Data
-import time, math
+import time
 
 
 class DataThread(Thread):
