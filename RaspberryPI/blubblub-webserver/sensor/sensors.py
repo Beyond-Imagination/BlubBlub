@@ -9,8 +9,10 @@ serialFromArduino = serial.Serial(port,9600)
 serialFromArduino.flushInput()
 
 class Sensors(Thread):
+
 	def __init__(self):
 		Thread.__init__(self)
+
 	def sensing(self):
 		input = serialFromArduino.readline()
 		input = input.decode("utf-8").strip()
@@ -26,5 +28,4 @@ class Sensors(Thread):
 		while True:
 			print(Data.illuminance,Data.turbidity,Data.temperature)
 			self.sensing()
-			time.sleep(20)
-
+			time.sleep(10)

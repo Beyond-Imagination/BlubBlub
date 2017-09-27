@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'',include('sensor.urls')),
     url(r'',include('authenticate.urls')),
     url(r'',include('led.urls')),
+    url(r'',include('motor.urls')),
 ]

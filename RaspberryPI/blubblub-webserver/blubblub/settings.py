@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'sensor.apps.SensorConfig',
     'authenticate.apps.AuthenticateConfig',
     'led.apps.LedConfig',
+    'motor.apps.MotorConfig',
 ]
 
 MIDDLEWARE = [
