@@ -14,7 +14,7 @@ class Crawling():
 
         list = soup.select("p")
         print(list)
-        Data.temperature = int(list[0].string)
+        Data.temperature = float(list[0].string)
         Data.illuminance = int(list[1].string)
-        Data.turbidity = int(list[2].string)
+        Data.turbidity = float(list[2].string)
         Data.time = int(list[3].string)
