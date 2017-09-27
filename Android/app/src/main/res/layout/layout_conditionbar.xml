@@ -1,107 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="#9987CEEB"
     android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/viewFeed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="1"
-            android:layout_x="5dp"
-            android:layout_y="9dp"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/feed" />
+    <ImageView
+        android:id="@+id/viewFeed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_weight="1"
+        android:layout_x="5dp"
+        android:layout_y="9dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/feed" />
 
-        <!--
-        <TextView
-            android:id="@+id/textFeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
-        -->
-        <Button
-            android:id="@+id/feedBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="1"
-            android:textStyle="bold" />
+    <!--
+    <TextView
+        android:id="@+id/textFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
+    -->
+    <Button
+        android:id="@+id/feedBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="1"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/viewTemperature"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="1"
-            android:layout_x="5dp"
-            android:layout_y="9dp"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/temperature" />
+    <ImageView
+        android:id="@+id/viewTemperature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_weight="1"
+        android:layout_x="5dp"
+        android:layout_y="9dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/temperature" />
 
-        <TextView
-            android:id="@+id/textTemperature"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="1"
-            android:text="0"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textTemperature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="1"
+        android:text="0"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/viewQuality"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_weight="1"
-            android:layout_x="5dp"
-            android:layout_y="9dp"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/turbidity" />
+    <ImageView
+        android:id="@+id/viewQuality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_weight="1"
+        android:layout_x="5dp"
+        android:layout_y="9dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/turbidity" />
 
-        <TextView
-            android:id="@+id/textQuality"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="1"
-            android:text="0"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textQuality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="1"
+        android:text="0"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/viewLight"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|right|center_vertical"
-            android:layout_weight="1"
-            android:layout_x="5dp"
-            android:layout_y="9dp"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/illumination" />
+    <ImageView
+        android:id="@+id/viewLight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|right|center_vertical"
+        android:layout_weight="1"
+        android:layout_x="5dp"
+        android:layout_y="9dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/illumination" />
 
-        <TextView
-            android:id="@+id/textLight"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="1"
-            android:text="0"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textLight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_weight="1"
+        android:text="0"
+        android:textStyle="bold" />
 
-        <beyond_imagination.blubblub.pSetting.SettingButton
-            android:id="@+id/button_setting"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Setting" />
+    <ImageView
+        android:id="@+id/viewTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="left|right|center_vertical"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/fish"
+        />
+
+    <TextView
+        android:id="@+id/textTotal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="0"
+        android:textStyle="bold"
+        android:layout_gravity="left|center_vertical"
+        />
+
+    <beyond_imagination.blubblub.pSetting.SettingButton
+        android:id="@+id/button_setting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/setting_icon" />
 
 </LinearLayout>

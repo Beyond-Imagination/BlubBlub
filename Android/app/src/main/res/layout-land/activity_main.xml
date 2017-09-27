@@ -20,7 +20,7 @@
 
     </beyond_imagination.blubblub.pWebView.MainWebView>
 
-    <beyond_imagination.blubblub.pConditionBar.ConditionBar
+    <beyond_imagination.blubblub.pCondition.ConditionBar
         android:id="@+id/conditionbar"
         class="beyond_imagination.blubblub.pConditionBar.Condition"
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         app:quality_img="@drawable/empty"
         app:temperature_img="@drawable/empty">
 
-    </beyond_imagination.blubblub.pConditionBar.ConditionBar>
+    </beyond_imagination.blubblub.pCondition.ConditionBar>
 
     <beyond_imagination.blubblub.pChatting.ChattingLayout
         android:id="@+id/chatting"
@@ -43,14 +43,14 @@
 
     </beyond_imagination.blubblub.pChatting.ChattingLayout>
 
-    <beyond_imagination.blubblub.pConditionBar.ControlMessage
+    <beyond_imagination.blubblub.pCondition.ControlMessage
         android:id="@+id/controlview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical|center_horizontal"
         android:visibility="invisible">
 
-    </beyond_imagination.blubblub.pConditionBar.ControlMessage>
+    </beyond_imagination.blubblub.pCondition.ControlMessage>
 
 
 </FrameLayout>

@@ -44,6 +44,11 @@ public class AnimationManager {
         };
 
         // 애니메이션 등록
+        registerAnimation();
+    }
+
+    private void registerAnimation()
+    {
         chattinglayout_open = AnimationUtils.loadAnimation(mainActivity,R.anim.anim_chattinglayout_open);
         chattinglayout_open.setAnimationListener(animationListener);
 

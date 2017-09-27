@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import beyond_imagination.blubblub.R;
 import beyond_imagination.blubblub.Setting;
@@ -39,6 +40,7 @@ public class SettingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         setting = intent.getParcelableExtra("setting");
+        Log.d("asdfasdf", "setting" + setting.getTmp_max());
 
         init();
     }
@@ -54,7 +56,6 @@ public class SettingActivity extends AppCompatActivity {
     ////
     // Getter and Setter
     ////
-
     public Setting getSetting() {
         return setting;
     }
