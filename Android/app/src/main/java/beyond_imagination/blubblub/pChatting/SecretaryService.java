@@ -54,14 +54,27 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by cru65 on 2017-09-24.
  */
 
+/**
+ * @author Yehun Park
+ * @file SecretaryService.java
+ * @breif Class connect with Google Service and use GoogleCalendar API
+ * Check permission and can use internet for identify user at Google Service
+ * Get user schedule and register user schedule
+ */
 public class SecretaryService implements EasyPermissions.PermissionCallbacks {
+    /****************/
     /*** Variable ***/
+    /****************/
+    // For access to Mainactivity
     MainActivity mainActivity;
 
+    // Views
     EditText ouputText;
 
+    // Identity
     GoogleAccountCredential mCredential;
 
+    // REQUEST_CODES
     static final int REQUEST_ACCOUNT_PICKER = 1006;
     static final int REQUEST_AUTHORIZATION = 1007;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1008;
@@ -71,58 +84,85 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR};
 
+    /****************/
     /*** Function ***/
+    /****************/
+
+    /**
+     * @param context
+     * @param editText
+     * @brief Constructor
+     */
     public SecretaryService(Context context, EditText editText) {
+        Log.d("SecretaryService", "Constructor execute");
         mainActivity = (MainActivity) context;
         ouputText = editText;
 
         mCredential = GoogleAccountCredential.usingOAuth2(mainActivity, Arrays.asList(SCOPES)).setBackOff(new ExponentialBackOff());
     }
 
+    /**
+     * @brief Start get schedule data
+     * Getting schedule don't need parameter
+     */
     public void getScheduleData() {
+        Log.d("SecretaryService", "get schedule");
+
         getResultsFromApi(null);
     }
 
+    /**
+     * @param message
+     * @brief Start register schedule data
+     * Registering schedule need Info of user schedule
+     */
     public void setScheduleData(String message) {
+        Log.d("SecretaryService", "set schedule, message : " + message);
+
         getResultsFromApi(message);
     }
 
+    /**
+     * @param message
+     * @brief Start Identify for using Google Service first, internet second
+     * If you can use Google Service and internet, access to Google Calender API
+     * If getResultsFromApi's parameter is null, get schedule data
+     * If getResultsFromApi's parameter have message, register schedule data
+     */
     private void getResultsFromApi(String message) {
-        Log.d("asdfasdf", "asdfasd");
-
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
-            Log.d("asdfasdf", "1");
+            Log.d("SecretaryService", "acquireGooglePlayServices");
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount(message);
-            Log.d("asdfasdf", "2");
+            Log.d("SecretaryService", "chooseAccount");
         } else if (!isDeviceOnline()) {
             Toast.makeText(mainActivity, "No network connection available", Toast.LENGTH_SHORT).show();
-            Log.d("asdfasdf", "3");
+            Log.d("SecretaryService", "No network connection available");
         } else {
-            if(message == null)
-                new MakeRequestTask(mCredential).execute();
+            if (message == null)
+                new MakeRequestTask(mCredential).start();
             else
-                new InputDataTask(message).execute();
-            Log.d("asdfasdf", "4");
+                new InputDataTask(message).start();
+            Log.d("SecretaryService", "start Access to Google Calendar");
         }
     }
 
+    /**
+     * @param message
+     * @brief Choose account for using Google Service
+     */
     @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
     private void chooseAccount(String message) {
         if (EasyPermissions.hasPermissions(mainActivity, Manifest.permission.GET_ACCOUNTS)) {
             String accountName = mainActivity.getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
-            if (accountName == null)
-                Log.d("asdfasdf", "ㅁㄴㅇㄹ" + accountName);
-
-            Log.d("asdfasdf", "ㅁㄴㅇㄹ");
 
             if (accountName != null) {
-                Log.d("asdfasdf", accountName);
+                Log.d("SecretaryService", "accountName-" + accountName);
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi(message);
             } else {
-                Log.d("asdfasdf", "ㅁㄴㅇㄹ");
+                Log.d("SecretaryService", "Request account picker");
                 mainActivity.startActivityForResult(mCredential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
             }
         } else {
@@ -144,26 +184,31 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-
-    // 네트워크와 연결되었는지 확인.
+    /**
+     * @return
+     * @brief Check connection with internet
+     */
     private boolean isDeviceOnline() {
         ConnectivityManager connMgr = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    // GooglePlay service APK가 설치되어있는지, 최신인지 확인해줌.
+    /**
+     * @return
+     * @brief Check installation GooglePlay service APK or Up to date.
+     */
     private boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         final int connectionStatusCode = apiAvailability.isGooglePlayServicesAvailable(mainActivity);
         return connectionStatusCode == ConnectionResult.SUCCESS;
     }
 
-    // 유저 dialog를 통해서 missing, out of date(유효기간), isInvalid 등을 확인해줌. 한마디로 에러 확인.
+    /**
+     * @brief Check missing, out of date, isInvalid and so on.
+     * Check error
+     */
     private void acquireGooglePlayServices() {
-
-        Log.d("asdfasdf", "asdfasd");
-
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         final int connectionStatusCode = apiAvailability.isGooglePlayServicesAvailable(mainActivity);
 
@@ -172,7 +217,6 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
         }
     }
 
-    // 구글 플레이 서비스 이용에 에러가 있을 시, 보여주는 Dialog
     void showGooglePlayServicesAvailabilityErrorDialog(final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(mainActivity, connectionStatusCode, REQUEST_GOOGLE_PLAY_SERVICES);
@@ -180,37 +224,47 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
     }
 
 
-    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
+    /**
+     * @author Yehun Park
+     * @file SecretaryService.MakeRequestTask.java
+     * @breif Class connect with Google Calendar API and get schedule data
+     * If get schedule data, format data according to app style
+     */
+    private class MakeRequestTask extends Thread {
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
         MakeRequestTask(GoogleAccountCredential credential) {
+            Log.d("MakeRequestTask", "Constructor execute");
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar.Builder(transport, jsonFactory, credential).setApplicationName("Google Calendar API Android Quickstart").build();
         }
 
         @Override
-        protected List<String> doInBackground(Void... voids) {
+        public void run() {
+            Log.d("MakeRequestTask", "run");
+
+            mainActivity.onControlMessage("대화", "뻐끔뻐끔(일정 확인 중 입니다~)");
 
             try {
-                Log.d("asdfadsf", "캘린더 작업중이당~~");
-                return getDataFromApi();
+                getDataFromApi();
             } catch (IOException e) {
-                mLastError = e;
-                cancel(true);
-                return null;
+                e.printStackTrace();
             }
         }
 
-        // 이전 캘린더에서 10개의 이벤트를 가져온다. 이벤트 string list 반환.
-        private List<String> getDataFromApi() throws IOException {
+        /**
+         * @return
+         * @throws IOException
+         * @brief Get 3 events after now from Google Calendar
+         * Contents : Date, Time, To do
+         */
+        private void getDataFromApi() throws IOException {
             DateTime now = new DateTime(System.currentTimeMillis());
             List<String> eventStrings = new ArrayList<String>();
             Events events = mService.events().list("primary").setMaxResults(3).setTimeMin(now).setOrderBy("startTime").setSingleEvents(true).execute();
             List<Event> items = events.getItems();
-
-            Log.d("asdfadsf", "캘린더 작업중이당~~");
 
             DateTime nowDate;
             String priDate = null;
@@ -225,24 +279,20 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
                     if (nowDate == null) {
                         nowDate = event.getStart().getDate();
                     }
-
-                    Log.d("asdfasdf", nowDate.toString());
                     token = nowDate.toString().split("T");
-                    Log.d("asdfasdf", token[0]);
 
                     if (token.length != 1)
                         temp = token[1];
-                    // 날짜 출력
+                    // Output Date
                     if (priDate == null || priDate.toString().equals(token[0]) == false) {
                         if (priDate != null) {
                             eventStrings.add("\n");
                         }
                         priDate = token[0];
                         token = token[0].split("-");
-                        Log.d("asdfasdf", token[0]);
                         eventStrings.add(String.format(" <%s년 %s월 %s일>", token[0], token[1], token[2]));
                     }
-                    // 일정 출력
+                    // Output Time and To do
                     if (temp == null) {
                         eventStrings.add(String.format("  오늘 %s", event.getSummary()));
                     } else {
@@ -251,69 +301,56 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
                     }
                 }
             }
-            return eventStrings;
-        }
 
-        protected void onPreExecute() {
-            mainActivity.onControlMessage("대화", "뻐끔뻐끔(일정 확인 중 입니다~)");
-        }
-
-        protected void onPostExecute(List<String> output) {
-            if (output == null || output.size() == 0) {
-                Toast.makeText(mainActivity, "No results returnd", Toast.LENGTH_SHORT).show();
+            // show result
+            if (eventStrings == null || eventStrings.size() == 0) {
             } else {
-                output.add(0, "----------일  정----------");
-                output.add("--------------------");
-                Toast.makeText(mainActivity, "Data retrieved using the Google Calendar API", Toast.LENGTH_SHORT).show();
+                eventStrings.add(0, "\n----------일  정----------");
+                eventStrings.add("--------------------");
 
-                String result = (TextUtils.join("\n", output));
+                String result = (TextUtils.join("\n", eventStrings));
 
-                mainActivity.onControlMessage("대화", (TextUtils.join("\n", output)));
+                mainActivity.onControlMessage("대화", (TextUtils.join("\n", eventStrings)));
             }
+            Log.d("MakeRequestTask", "Finish");
         }
-
-        protected void onCancelled() {
-            if (mLastError != null) {
-                if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
-                    showGooglePlayServicesAvailabilityErrorDialog(((GooglePlayServicesAvailabilityIOException) mLastError).getConnectionStatusCode());
-                } else if (mLastError instanceof UserRecoverableAuthIOException) {
-                    Log.e("asdfasdf", "여기여기");
-                    mainActivity.startActivityForResult(((UserRecoverableAuthIOException) mLastError).getIntent(), REQUEST_AUTHORIZATION);
-                } else {
-                    Toast.makeText(mainActivity, "The following error occurred:\n" + mLastError.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(mainActivity, "Request cancelled", Toast.LENGTH_SHORT).show();
-
-            }
-        }
-
     }
 
-    private class InputDataTask extends AsyncTask<Void, Void, String> {
+    /**
+     * @author Yehun Park
+     * @file SecretaryService.InputDataTask.java
+     * @breif Class connect with Google Calendar API and register schedule data
+     * For register schedule data, format data according to app style
+     */
+    private class InputDataTask extends Thread {
         HttpTransport transport = null;
         JsonFactory jsonFactory = null;
         com.google.api.services.calendar.Calendar service = null;
 
-        String message;
-        String yearData;
-        String monthData;
-        String dayData;
-        String startTimeData;
-        String endTimeData;
-        String duringTimeData;
-        String summaryData;
+        String message = null;
+        String yearData = null;
+        String monthData = null;
+        String dayData = null;
+        String startTimeData = null;
+        String endTimeData = null;
+        String duringTimeData = null;
+        String summaryData = null;
+
+        String result = null;
 
         public InputDataTask(String message) {
+            Log.d("InputDataTask", "Constructor execute");
             int permissionCheck = ContextCompat.checkSelfPermission(mainActivity,
                     Manifest.permission.WRITE_CALENDAR);
-            Log.d("asdfadsf", "permissioni : " + permissionCheck);
+            Log.d("InputDataTask", "permissioni : " + permissionCheck);
 
             this.message = message;
         }
 
         @Override
-        protected String doInBackground(Void... params) {
+        public void run() {
+            Log.d("InputDataTask", "doInBackground start");
+
             transport = AndroidHttp.newCompatibleTransport();
             jsonFactory = JacksonFactory.getDefaultInstance();
             service = new com.google.api.services.calendar.Calendar.Builder(
@@ -322,40 +359,30 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
                     .build();
 
 
-            messagePassing(message);
+            if (messagePassing(message) == true) {
 
-            // 이벤트 정보 등록
-            Event event = new Event().setSummary(summaryData);
+                // Register Event Info
+                Event event = new Event().setSummary(summaryData);
 
-            DateTime startDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, startTimeData));
-            EventDateTime start = new EventDateTime().setDateTime(startDateTime);
-            event.setStart(start);
+                DateTime startDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, startTimeData));
+                EventDateTime start = new EventDateTime().setDateTime(startDateTime);
+                event.setStart(start);
 
-            DateTime endDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, endTimeData));
-            EventDateTime end = new EventDateTime().setDateTime(endDateTime);
-            event.setEnd(end);
+                DateTime endDateTime = new DateTime(String.format("%s-%s-%sT%s:00:00+09:00", yearData, monthData, dayData, endTimeData));
+                EventDateTime end = new EventDateTime().setDateTime(endDateTime);
+                event.setEnd(end);
 
-            String calendarId = "primary";
-            try {
-                event = service.events().insert(calendarId, event).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
+                String calendarId = "primary";
+                try {
+                    event = service.events().insert(calendarId, event).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                result = event.getHtmlLink();
+
+                Log.d("InputDataTask", "EventCreate : " + result);
             }
-
-            Log.d("asdfasdf", "EventCreate : " + event.getHtmlLink());
-
-            return event.getHtmlLink();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
 
             if (result == null) {
                 mainActivity.onControlMessage("대화", "일정 정보가 부족합니다.\\n년, 월, 일, 시작시간, 끝나는시간, \"내용\"을 말해주세요");
@@ -364,71 +391,73 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
             }
         }
 
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-        }
-
-        private void messagePassing(String message)
-        {
-            // 데이터 파싱
-            String[] token;
-            String[] token2;
+        /**
+         * @param message
+         * @brief Message format according to our app style
+         */
+        private boolean messagePassing(String message) {
+            String[] token = null;
+            String[] token2 = null;
             String temp;
-            int index;
-            //// 내용 파싱
-            token = message.split("\"");
+
+            if (message.contains("\""))
+                token = message.split("\"");
+
+            if (token == null)
+                return false;
+
+            if (token.length == 1)
+                return false;
+
             summaryData = token[1];
 
-            if(token.length == 3)
+            if (token.length == 3)
                 temp = token[0] + token[2];
             else
                 temp = token[0];
 
             token = temp.split(" ");
 
-            for(int i = 0; i<token.length;i++) {
-                if(token[i].contains("일정등록") || token[i].contains("일정") || token[i].contains("등록")){
+            for (int i = 0; i < token.length; i++) {
+                if (token[i].contains("일정등록") || token[i].contains("일정") || token[i].contains("등록")) {
                     token[i] = "";
-                }
-                else if (token[i].contains("년")) {
+                } else if (token[i].contains("년")) {
                     token2 = token[i].split("년");
                     yearData = token2[0];
-                }
-                else if (token[i].contains("월")) {
+                } else if (token[i].contains("월")) {
                     token2 = token[i].split("월");
                     monthData = token2[0];
-                    if(Integer.valueOf(monthData) < 10)
-                        monthData = "0"+monthData;
-                }
-                else if (token[i].contains("일")) {
+                    if (Integer.valueOf(monthData) < 10)
+                        monthData = "0" + monthData;
+                } else if (token[i].contains("일")) {
                     token2 = token[i].split("일");
                     dayData = token2[0];
 
-                    if(Integer.valueOf(dayData) < 10)
-                        dayData = "0"+dayData;
-                }
-                else if (token[i].contains("시부터")) {
+                    if (Integer.valueOf(dayData) < 10)
+                        dayData = "0" + dayData;
+                } else if (token[i].contains("시부터")) {
                     token2 = token[i].split("시");
                     startTimeData = token2[0];
-                    if(Integer.valueOf(startTimeData) < 10)
+                    if (Integer.valueOf(startTimeData) < 10)
                         startTimeData = "0" + startTimeData;
-                }
-                else if (token[i].contains("시간")) {
+                } else if (token[i].contains("시간")) {
                     token2 = token[i].split("시");
                     duringTimeData = token2[0];
 
                     int endtime = Integer.valueOf(startTimeData) + Integer.valueOf(duringTimeData);
 
-                    if(endtime < 10)
+                    if (endtime < 10)
                         endTimeData = "0" + endtime;
                     else
-                        endTimeData = ""+endtime;
+                        endTimeData = "" + endtime;
                 }
             }
+            if (yearData == null || monthData == null || dayData == null || startTimeData == null || duringTimeData == null || endTimeData == null)
+                return false;
+
+            return true;
         }
     }
-
 
     ////
     // Getter and Setter

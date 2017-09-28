@@ -15,7 +15,13 @@ import okhttp3.RequestBody;
 /**
  * Created by laggu on 2017-07-24.
  */
-
+/**
+ * @file FCMInstanceIDService.java
+ * @breif
+ * Class about FCM service.
+ * If your FCM-token change, send new FCM-token to your connected server.
+ * @author Yehun Park
+ */
 public class FCMInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "MyFirebaseIIDService";
 

@@ -23,14 +23,22 @@ import beyond_imagination.blubblub.Setting;
 /**
  * Created by cru65 on 2017-07-28.
  */
-
+/**
+ * @file ConditionBar.java
+ * @breif
+ * Class include all of things about bowl condition data
+ * By this data, you can check bowl condition and maintain it.
+ * And you can check total score of bowl. Maybe this can give interesting about maintaining your bowl
+ * @author Yehun Park
+ */
 public class ConditionBar extends LinearLayout {
+
     /*** Variable ***/
     MainActivity mainActivity;
 
     Setting setting;
 
-    // 탁도가 좋지 않을 경우 계속해서 total점수를 깍기 위해 만든 count;
+    // 탁도가 좋지 않을 경우 계속해서 total점수를 깍기 위해 만든 count
     double turbiditycount;
 
     ImageView imagefeed;

@@ -23,7 +23,13 @@ import okhttp3.HttpUrl;
 /**
  * Created by cru65 on 2017-08-21.
  */
-
+/**
+ * @file HttpClient.java
+ * @breif
+ * Class connect to website what i want to connect
+ * Open outputstream and get data(HTML code, response code...)
+ * @author Yehun Park
+ */
 public class HttpClient {
 
     /*** Variable ***/

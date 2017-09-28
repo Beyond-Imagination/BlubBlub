@@ -12,7 +12,12 @@ import java.net.URL;
 /**
  * Created by cru65 on 2017-09-22.
  */
-
+/**
+ * @file SendToBowl.java
+ * @breif
+ * Class
+ * @author Yehun Park
+ */
 public class SendToBowl extends Thread {
     /*** Variable ***/
     String type;

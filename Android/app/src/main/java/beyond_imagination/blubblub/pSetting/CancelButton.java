@@ -9,7 +9,13 @@ import android.widget.Button;
 /**
  * Created by cru65 on 2017-08-04.
  */
-
+/**
+ * @file CancelButton.java
+ * @breif
+ * Class custom view about button
+ * Close Setting Activity and back to previous setting data
+ * @author Yehun Park
+ */
 public class CancelButton extends android.support.v7.widget.AppCompatButton {
     /*** Variable ***/
     private SettingActivity settingActivity;

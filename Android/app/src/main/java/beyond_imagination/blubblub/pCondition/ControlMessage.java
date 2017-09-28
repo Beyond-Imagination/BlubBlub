@@ -16,7 +16,14 @@ import beyond_imagination.blubblub.R;
 /**
  * Created by cru65 on 2017-09-18.
  */
-
+/**
+ * @file ControlMessage.java
+ * @breif
+ * Class show which problem happened in your bowl.
+ * If there are some problem in your bowl, you receive FCM message
+ * And ask, do you wanna control request to you bowl?
+ * @author Yehun Park
+ */
 public class ControlMessage extends LinearLayout {
     /*** Variable ***/
     TextView textView;

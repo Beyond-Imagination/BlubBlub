@@ -25,7 +25,13 @@ import beyond_imagination.blubblub.pWebConnection.GetConditionData;
 import beyond_imagination.blubblub.pWebConnection.SendToBowl;
 import beyond_imagination.blubblub.pWebConnection.SendToChatbot;
 import beyond_imagination.blubblub.pWebView.MainWebView;
-
+/**
+ * @file ChattingLayout.java
+ * @breif
+ * Class include all of things about chatting
+ * Connect with chatbot server and Google Calendar API
+ * @author Yehun Park
+ */
 public class MainActivity extends AppCompatActivity {
 
     /*** Variable ***/
