@@ -56,5 +56,5 @@
 
 ## License
 > Copyright (c) 2017, Beyond_Imagination  
-> This file is licenced under a Creative Commons license: 
+> This project is licenced under a Creative Commons license: 
 > http://creativecommons.org/licenses/by/2.5/ 
