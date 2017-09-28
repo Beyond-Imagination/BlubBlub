@@ -8,16 +8,17 @@ from dataThread import DataThread
 
 
 class ChatbotServer(Thread):
+    """프로그램의 메인 쓰레드
+       안드로이드와의 통신을 담당하며 소켓통신을 이용함
+       """
 
     def __init__(self):
         Thread.__init__(self)
         self.HOST = ''
         self.PORT = 8002
 
-        self.db = TokenDB()
 
         self.fcm = FCMRequest()
-        self.fcm.setTokenList(self.db.fetchTokenTable())
 
         self.chatbot = Chatbot()
 
@@ -26,6 +27,9 @@ class ChatbotServer(Thread):
 
 
     def run(self):
+        self.db = TokenDB()
+        self.fcm.setTokenList(self.db.fetchTokenTable())
+
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((self.HOST, self.PORT))
 
@@ -55,19 +59,21 @@ class ChatbotServer(Thread):
             conn.close()
 
     def receiveToken(self, dict):
-        if dict['type'] == 'token':
-            if dict['secret'] == 'Beyond_Imagination':
-                result = self.db.insertToTokenTable(str(dict['token']))
-                if result == 1:
-                    self.fcm.addToken(dict['token'])
+        """dict의 secret 값이 약속한 string이 맞는지 확인 맞다면 db에 저장한다."""
+        if dict['secret'] == 'Beyond_Imagination':
+            result = self.db.insertToTokenTable(str(dict['token']))
+            if result == 1:
+                self.fcm.addToken(dict['token'])
 
     def receiveMessage(self, dict):
+        """사용자의 메시지에 맞는 응답을 생성후 FCM을 통해 해당 안드로이기기로 전송"""
         print("사용자", dict['message'])
         reply = self.chatbot.make_reply(dict['message'])
         print("챗봇", reply)
         self.fcm.sendTalkingMessage(reply, dict['token'])
 
     def receiveSetting(self, dict):
+        """사용자에게 받은 세팅값을 저장"""
         self.dt.setFeedingCycle(dict['feedcycle'])
         self.dt.setMaxTemperature(dict['maxtemp'])
         self.dt.setMinTemperature(dict['mintemp'])
@@ -78,6 +84,7 @@ chatbotServer = ChatbotServer()
 chatbotServer.start()
 
 while True:
+    """예상치 못한 쓰레드 종료시 재실행"""
     if not chatbotServer.is_alive():
         chatbotServer = ChatbotServer()
         chatbotServer.start()
