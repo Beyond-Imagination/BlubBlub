@@ -24,8 +24,9 @@ class Sensors(Thread):
 			Data.turbidity = list_input[-1]
 		elif list_input[0]=='TEMP':
 			Data.temperature = list_input[-1]
+			serialFromArduino.flushInput()
 	def run(self):
 		while True:
 			print(Data.illuminance,Data.turbidity,Data.temperature)
 			self.sensing()
-			time.sleep(10)
+			time.sleep(1)
