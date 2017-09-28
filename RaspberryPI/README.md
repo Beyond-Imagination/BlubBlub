@@ -25,6 +25,6 @@
 > 2. 모터와 led를 연결합니다.
 > 3. 웹캠을 연결합니다.
 > 4. RaspberryPI 폴더를 다운받습니다.
-> 5. mjpg-streamer를 실행하기 위해 추가 파일이 필요하다면 설치를 한후 실행합니다.
+> 5. 인터넷에서 mjpg-stream 설치한후 실행합니다.
 > 6. source RaspberryPI/django-env/bin/activate 명령을 통해 파이썬 가상환경을 실행합니다.
 > 7. python manage.py <ip>:<port> 명령으로 장고 웹서버를 실행합니다.
