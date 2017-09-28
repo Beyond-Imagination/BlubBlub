@@ -10,7 +10,12 @@ import android.widget.Spinner;
 /**
  * Created by cru65 on 2017-08-04.
  */
-
+/**
+ * @file IlluminationSpinner.java
+ * @breif
+ * Class custom view about Spinner
+ * @author Yehun Park
+ */
 public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpinner {
     /*** Variable ***/
     SettingActivity settingActivity;

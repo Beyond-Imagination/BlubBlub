@@ -12,7 +12,14 @@ import beyond_imagination.blubblub.Setting;
 /**
  * Created by cru65 on 2017-08-03.
  */
-
+/**
+ * @file SettingActivity.java
+ * @breif
+ * Class include all of things about setting
+ * You can modify your setting values.
+ * If you change your setting values, send your setting data to chatbot server.
+ * @author Yehun Park
+ */
 public class SettingActivity extends AppCompatActivity {
     /*** Variable ***/
     private Setting setting;

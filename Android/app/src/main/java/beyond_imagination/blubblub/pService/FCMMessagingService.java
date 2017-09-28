@@ -20,7 +20,13 @@ import beyond_imagination.blubblub.R;
 /**
  * Created by laggu on 2017-07-24.
  */
-
+/**
+ * @file FCMMessagingService.java
+ * @breif
+ * Class about FCM service
+ * If you receive FCM message, onMessageReceived() execute. and handle FCM message according to message type
+ * @author Yehun Park
+ */
 public class FCMMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMsgService";
 
@@ -64,6 +70,7 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
     private void receiveData(String type, String body) {
         ((MainActivity) MainActivity.getInstance()).onControlMessage(type, body);
 
+        // check how many FCM message("먹이") accumulate.
         if (type.equals("먹이"))
             ((MainActivity) MainActivity.getInstance()).countAccumulate();
     }

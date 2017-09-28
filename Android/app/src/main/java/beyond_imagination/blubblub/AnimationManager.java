@@ -7,7 +7,13 @@ import android.view.animation.AnimationUtils;
 /**
  * Created by cru65 on 2017-07-27.
  */
-
+/**
+ * @file ChattingLayout.java
+ * @breif
+ * Class include all of things about chatting
+ * Connect with chatbot server and Google Calendar API
+ * @author Yehun Park
+ */
 public class AnimationManager {
     /*** Variable ***/
     MainActivity mainActivity;

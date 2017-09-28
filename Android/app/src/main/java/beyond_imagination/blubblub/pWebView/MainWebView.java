@@ -17,7 +17,13 @@ import beyond_imagination.blubblub.MainActivity;
 /**
  * Created by cru65 on 2017-07-26.
  */
-
+/**
+ * @file ChattingLayout.java
+ * @breif
+ * Class include all of things about chatting
+ * Connect with chatbot server and Google Calendar API
+ * @author Yehun Park
+ */
 public class MainWebView extends WebView{
     /*** Variable ***/
     MainActivity mainActivity;

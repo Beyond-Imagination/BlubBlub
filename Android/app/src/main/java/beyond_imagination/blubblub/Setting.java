@@ -8,7 +8,13 @@ import android.util.Log;
 /**
  * Created by cru65 on 2017-08-02.
  */
-
+/**
+ * @file ChattingLayout.java
+ * @breif
+ * Class include all of things about chatting
+ * Connect with chatbot server and Google Calendar API
+ * @author Yehun Park
+ */
 public class Setting implements Parcelable{
     /*** Variable ***/
     // 자동 반자동

@@ -11,7 +11,15 @@ import beyond_imagination.blubblub.MainActivity;
 /**
  * Created by cru65 on 2017-08-21.
  */
-
+/**
+ * @file GetConditionData.java
+ * @breif
+ * Class get condition data from website
+ * Connect website(bowl server) and Crawling HTML code.
+ * Get conditioni data from HTML code and update condition data in application
+ * This work execute per every 1 second.
+ * @author Yehun Park
+ */
 public class GetConditionData extends AsyncTask<MainActivity, String, String> {
     /*** Variable ***/
     MainActivity mainActivity;
@@ -86,7 +94,6 @@ public class GetConditionData extends AsyncTask<MainActivity, String, String> {
                 time = temp;
             }
         }
-
         return data;
     }
 

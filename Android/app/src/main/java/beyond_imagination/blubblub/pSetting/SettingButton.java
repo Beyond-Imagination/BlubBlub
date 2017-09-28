@@ -12,7 +12,13 @@ import beyond_imagination.blubblub.MainActivity;
 /**
  * Created by cru65 on 2017-08-03.
  */
-
+/**
+ * @file SettingButton.java
+ * @breif
+ * Class include all of things about button
+ * Click this button and modify your setting value.
+ * @author Yehun Park
+ */
 public class SettingButton extends android.support.v7.widget.AppCompatImageView{
     /*** Variable ***/
     MainActivity mainActivity;

@@ -10,7 +10,13 @@ import android.widget.Button;
 /**
  * Created by cru65 on 2017-08-03.
  */
-
+/**
+ * @file SaveButton.java
+ * @breif
+ * Class custom view about button.
+ * Save your modified setting data and send to MainActivity.
+ * @author Yehun Park
+ */
 public class SaveButton extends android.support.v7.widget.AppCompatButton {
     /*** Variable ***/
     private SettingActivity settingActivity;

@@ -10,7 +10,12 @@ import beyond_imagination.blubblub.R;
 /**
  * Created by cru65 on 2017-08-04.
  */
-
+/**
+ * @file AutoRadioGroup.java
+ * @breif
+ * Class custom view about RadioGroup
+ * @author Yehun Park
+ */
 public class AutoRadioGroup extends RadioGroup {
     /*** Variable ***/
     SettingActivity settingActivity;
