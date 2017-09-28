@@ -9,6 +9,7 @@ class Crawling():
         self.url = "http://163.152.219.170:8000/sensor/"
 
     def getData(self):
+        """크롤링을 통해 어항 상태값을 얻어냄"""
         res = urllib.request.urlopen(self.url)
         soup = BeautifulSoup(res, "html.parser")
 

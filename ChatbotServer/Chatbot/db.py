@@ -36,17 +36,18 @@ def updateTokenTable(previous, current):
 
 """
 class TokenDB:
-
+    """DB 관리 클래스"""
     def __init__(self):
         self.con = sqlite3.connect("token.db")
         self.cur = self.con.cursor()
 
         try:
-            self.cur.execute("create table if not exists FCMtoken(token text primary key);")
+            self.cur.execute("create table if not exists FCMtoken(token text primary key);") #DB 생성, 이미 존재시 생성하지 않음
         except sqlite3.Error as e:
             print("Error: ", e.args[0])
 
     def insertToTokenTable(self, token):
+        """주어진 token을 DB에 입력"""
         try:
             self.cur.execute("insert into FCMtoken VALUES (?);", (token,))
             self.con.commit()
@@ -56,6 +57,7 @@ class TokenDB:
             return 0
 
     def fetchTokenTable(self):
+        """저장된 token list return"""
         try:
             self.cur.execute("select * from FCMtoken;")
             self.con.commit()

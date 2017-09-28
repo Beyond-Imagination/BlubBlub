@@ -8,7 +8,6 @@ class Chatbot:
     def __init__(self):
         self.dict_file = "chatbot-data.json"
         self.dic = {}
-        self.twitter = Twitter()
 
         # 딕셔너리가 있다면 읽어 들이기
         if os.path.exists(self.dict_file):
@@ -32,6 +31,7 @@ class Chatbot:
 
     # 딕셔너리에 글 등록하기
     def set_word3(self, dic, s3):
+        print("set_word3")
         w1, w2, w3 = s3
         if not w1 in self.dic: self.dic[w1] = {}
         if not w2 in self.dic[w1]: self.dic[w1][w2] = {}
@@ -79,7 +79,10 @@ class Chatbot:
     def make_reply(self, text):
         # 단어 학습 시키기
         if not text[-1] in [".", "?"]: text += "."
-        words = self.twitter.pos(text)
+        print(text)
+        twitter = Twitter()
+        words = twitter.pos(text)
+        print(words)
         self.register_dic(words)
         # 사전에 단어가 있다면 그것을 기반으로 문장 만들기
         for word in words:
@@ -88,6 +91,8 @@ class Chatbot:
         return self.make_sentence("@")
 
 
+#c = Chatbot()
+#print(c.make_reply("안녕"))
 
 """
 dict_file = "chatbot-data.json"
