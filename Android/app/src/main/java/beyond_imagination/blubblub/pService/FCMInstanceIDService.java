@@ -37,8 +37,6 @@ public class FCMInstanceIDService extends FirebaseInstanceIdService {
 
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
-        Log.d("qqqqqq", "token" + token);
-
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
                 .add("Token", token)
@@ -52,6 +50,5 @@ public class FCMInstanceIDService extends FirebaseInstanceIdService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

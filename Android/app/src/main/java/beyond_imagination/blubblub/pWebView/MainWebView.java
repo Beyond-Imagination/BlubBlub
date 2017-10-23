@@ -12,23 +12,30 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import beyond_imagination.blubblub.MainActivity;
 
 /**
  * Created by cru65 on 2017-07-26.
  */
 /**
- * @file ChattingLayout.java
+ * @file MainWebView.java
  * @breif
- * Class include all of things about chatting
- * Connect with chatbot server and Google Calendar API
+ * Class for watching streamed bowl
  * @author Yehun Park
  */
 public class MainWebView extends WebView{
+    /****************/
     /*** Variable ***/
+    /****************/
     MainActivity mainActivity;
+    String url;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public MainWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -38,6 +45,8 @@ public class MainWebView extends WebView{
     }
 
     private void init() {
+        url = "http://163.152.219.170:8001/javascript_simple.html";
+
         setWebViewClient(new MyWebViewClient());
 
         // getSettings()에서 폰트크기, 확대여부, 스크립트 허용 여부 등의 설정 변경 가능.
@@ -48,7 +57,8 @@ public class MainWebView extends WebView{
 
         getSettings().setUseWideViewPort(true);
 
-        loadUrl("http://163.152.219.170:8001/javascript_simple.html");
+        loadUrl(url);
+        Log.d("MainWebView", "URL : " + url);
     }
 
     @Override

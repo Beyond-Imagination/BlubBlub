@@ -32,8 +32,9 @@ import beyond_imagination.blubblub.Setting;
  * @author Yehun Park
  */
 public class ConditionBar extends LinearLayout {
-
+    /****************/
     /*** Variable ***/
+    /****************/
     MainActivity mainActivity;
 
     Setting setting;
@@ -41,6 +42,7 @@ public class ConditionBar extends LinearLayout {
     // 탁도가 좋지 않을 경우 계속해서 total점수를 깍기 위해 만든 count
     double turbiditycount;
 
+    // For condition datas
     ImageView imagefeed;
     Button feedbtn;
     TextView texttemperature;
@@ -52,15 +54,19 @@ public class ConditionBar extends LinearLayout {
     ImageView imagetotal;
     TextView texttotal;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public ConditionBar(Context context) {
         super(context);
+        Log.d("ConditionBar", "Constructor execute");
         mainActivity = (MainActivity) context;
         init();
     }
 
     public ConditionBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        Log.d("ConditionBar", "Constructor execute");
         mainActivity = (MainActivity) context;
         init();
         getAttrs(attrs);
@@ -68,6 +74,7 @@ public class ConditionBar extends LinearLayout {
 
     public ConditionBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Log.d("ConditionBar", "Constructor execute");
         mainActivity = (MainActivity) context;
         init();
         getAttrs(attrs, defStyleAttr);
@@ -108,6 +115,8 @@ public class ConditionBar extends LinearLayout {
         imagequality = (ImageView) findViewById(R.id.viewQuality);
         imagelight = (ImageView) findViewById(R.id.viewLight);
         imagetotal = (ImageView) findViewById(R.id.viewTotal);
+
+        Log.d("ContidionBar", "init()-success)");
     }
 
     private void getAttrs(AttributeSet attrs) {
@@ -135,10 +144,22 @@ public class ConditionBar extends LinearLayout {
         typedArray.recycle();
     }
 
-    // Condition Update
+    /**
+     * @breif
+     * Get condition data and processing condition data to suit BlubBlub UI
+     * feed time is last feeding time. So we compare with now and check is it time to feed.
+     * you can use feed button 1 hour before setted feedtime.
+     * In turbidity, 0 is Good! and high score is Bad...
+     * Finally, we can check total bowl condition score.
+     * @param feedtime
+     * @param temperature
+     * @param illumination
+     * @param turbidity
+     */
     public void onConditionUpdate(String feedtime, String temperature, String illumination, String turbidity) {
-            setting = mainActivity.getSetting();
+        Log.d("ConditionBar", "onConditionUpdate");
 
+        setting = mainActivity.getSetting();
 
         // time after feeding (min)
         // 8시간 이상이면 자동으로 버튼 활성화
@@ -179,9 +200,21 @@ public class ConditionBar extends LinearLayout {
             textquality.setText("나쁨");
         }
 
+        // check total bowl score.
         texttotal.setText(getTotalScore(feedtime, temperature, illumination, turbidity));
     }
 
+    /**
+     * @breif
+     * You can check your total management score.
+     * If temperature over and under your setted temperature value, score will be decrease.
+     * If you maintain your turbidity bad, your total score will be decrease.
+     * @param feedtime
+     * @param temperature
+     * @param illumination
+     * @param turbidity
+     * @return
+     */
     private String getTotalScore(String feedtime, String temperature, String illumination, String turbidity) {
         int score = 100;
         float feedtime_t = Float.valueOf(feedtime);
@@ -189,7 +222,7 @@ public class ConditionBar extends LinearLayout {
         float illumination_t = Float.valueOf(illumination);
         float turbidity_t = Float.valueOf(turbidity);
 
-        Log.d("asdfadsf", "totalscore : "+ score);
+        Log.d("ConditionBar", "getTotalScore");
 
         // 온도 점수 40점 부여
         // 최대30, 최소20 온도가 되면 0점이 되도록
@@ -197,17 +230,18 @@ public class ConditionBar extends LinearLayout {
         double tmpDiff = setting.getTmp_max() - tmpAverage;
         score = score - (int)((Math.abs(tmpAverage - temperature_t) / tmpDiff) * 40);
 
-        Log.d("asdfasdf", "max" + setting.getTmp_max() + "min" + setting.getTmp_min());
-        Log.d("asdfasdf", "max" + mainActivity.getSetting().getTmp_max() + "min" + mainActivity.getSetting().getTmp_min());
-
         // 탁도 점수
         // 10초 0.0042점 감소.
         score = score - (int)turbiditycount;
-        Log.d("asdfadsf", "totalscore : "+ score);
 
         return String.valueOf(score);
     }
 
+    /**
+     * @breif
+     * Control Feed Button, Visible and invisible.
+     * @param order
+     */
     public void controllFeedBtn(boolean order) {
         if (order == true) {
             if (feedbtn.getVisibility() == View.INVISIBLE) {

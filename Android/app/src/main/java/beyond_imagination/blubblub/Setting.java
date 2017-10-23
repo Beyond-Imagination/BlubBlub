@@ -9,14 +9,16 @@ import android.util.Log;
  * Created by cru65 on 2017-08-02.
  */
 /**
- * @file ChattingLayout.java
+ * @file Setting.java
  * @breif
- * Class include all of things about chatting
- * Connect with chatbot server and Google Calendar API
+ * Class include all data about setting
+ * This class implements Parcelable for using as a Intent data.
  * @author Yehun Park
  */
 public class Setting implements Parcelable{
+    /****************/
     /*** Variable ***/
+    /****************/
     // 자동 반자동
     private boolean auto;
     // 먹이 주기 (1시간 단위)
@@ -27,7 +29,9 @@ public class Setting implements Parcelable{
     // 조도
     private int illum_min;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public Setting()
     {
         auto = false;
@@ -45,7 +49,7 @@ public class Setting implements Parcelable{
         illum_min = in.readInt();
     }
 
-    // 접근자 잘 해줘야 한다.
+    // 접근자 구분을 잘 해줘야 한다.
     public static final Creator<Setting> CREATOR = new Creator<Setting>(){
         @Override
         public Setting createFromParcel(Parcel source) {

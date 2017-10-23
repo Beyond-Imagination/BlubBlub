@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,14 +21,18 @@ import beyond_imagination.blubblub.MainActivity;
  * @author Yehun Park
  */
 public class SettingButton extends android.support.v7.widget.AppCompatImageView{
+    /****************/
     /*** Variable ***/
+    /****************/
     MainActivity mainActivity;
     AttributeSet attrs;
 
     // Code vaule
     private final static int SETTING_CALL = 1000;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public SettingButton(Context context) {
         super(context);
         mainActivity = (MainActivity)context;
@@ -58,5 +63,6 @@ public class SettingButton extends android.support.v7.widget.AppCompatImageView{
                 mainActivity.startActivityForResult(intent, SETTING_CALL);
             }
         });
+        Log.d("SettingButton", "init()-success");
     }
 }

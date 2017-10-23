@@ -31,8 +31,9 @@ import okhttp3.HttpUrl;
  * @author Yehun Park
  */
 public class HttpClient {
-
+    /****************/
     /*** Variable ***/
+    /****************/
     private static final String WWW_FORM = "application/x-www-form-urlencoded";
 
     private int httpStatusCode;
@@ -40,7 +41,9 @@ public class HttpClient {
 
     private Builder builder;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public int getHttpStatusCode(){
         return httpStatusCode;
     }
@@ -56,11 +59,11 @@ public class HttpClient {
     public void request(){
         HttpURLConnection conn = getConnection();
         if(conn == null)
-            Log.d("asdfasdf", "request null 입니다.");
+            Log.d("HttpClient", "request Fail");
         setHeader(conn);
         setBody(conn);
         httpStatusCode = getStatusCode(conn);
-        Log.d("asdfasdf-code", Integer.toString(httpStatusCode));
+        Log.d("HttpClient", "httpStatusCode-"+Integer.toString(httpStatusCode));
         body = readStream(conn);
         conn.disconnect();
     }
@@ -93,7 +96,7 @@ public class HttpClient {
     private void setRequestMethod(HttpURLConnection connection) {
         try {
             connection.setRequestMethod(builder.getMethod());
-            Log.d("asdf-Method", builder.getMethod());
+            Log.d("HttpClient", "HttpClient-Method"+builder.getMethod());
         } catch (ProtocolException e) {
             e.printStackTrace();
         }
@@ -138,7 +141,7 @@ public class HttpClient {
         String result = "";
         BufferedReader reader = null;
 
-        Log.d("asdfasdf", "readStream");
+        Log.d("HttpClient", "readStream execute");
 
         try {
             int statuscode = connection.getResponseCode();
@@ -150,10 +153,10 @@ public class HttpClient {
             while ((line = reader.readLine()) != null) {
                 result += line;
             }
-            Log.d("asdfasdf-result", result);
+            Log.d("HttpClient", "HttpClient-result"+result);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("asdfasdf", "Error");
+            Log.d("HttpClient", "Error!!!!!");
         } finally{
             try {
                 if (reader != null) {
@@ -163,8 +166,6 @@ public class HttpClient {
                 e.printStackTrace();
             }
         }
-
-        Log.d("asdfasdf", result);
         return result;
     }
 

@@ -26,15 +26,16 @@ import beyond_imagination.blubblub.pWebConnection.SendToBowl;
 import beyond_imagination.blubblub.pWebConnection.SendToChatbot;
 import beyond_imagination.blubblub.pWebView.MainWebView;
 /**
- * @file ChattingLayout.java
+ * @file MainActivity.java
  * @breif
- * Class include all of things about chatting
- * Connect with chatbot server and Google Calendar API
+ * This class is core of this application.
+ * Almost class connected with MainActivity and worked by MainActivity.
  * @author Yehun Park
  */
 public class MainActivity extends AppCompatActivity {
-
+    /****************/
     /*** Variable ***/
+    /****************/
     private MainWebView mainWebView;
     private ChattingLayout chattingLayout;
     private ConditionBar conditionBar;
@@ -87,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
     // Handler
     private FCMHandler fcmHandler;
 
+    /**
+     * @breif
+     * Just main Thread access to UI. So, in sub Thread, for access to UI, using Handler and access to main Thread
+     * Type : Update condition, FCM problem, send message, receive message
+     */
     class FCMHandler extends Handler {
         Bundle bundle;
 
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
 
             bundle = msg.getData();
+
+            Log.d("MainActivity", "Handler - " + msg.what);
 
             switch (msg.what) {
                 case UPDATE_CONDITION:
@@ -106,11 +114,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case SEND_MESSAGE:
                     chattingLayout.sendMessage("나 : " + bundle.getString("body"));
-                    Log.d("qqqqqqqq", bundle.getString("body"));
                     break;
                 case RECEIVE_MESSAGE:
                     chattingLayout.receiveMessage("붕어 : " +bundle.getString("body"));
-                    Log.d("qqqqqqqq", bundle.getString("body"));
                     break;
 
                 case GET_CALENDAR_DATA:
@@ -119,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /****************/
     /*** Function ***/
+    /****************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
         animationManager = new AnimationManager(this);
 
+        /**
+         * @breif
+         * GestureDetector for visible, invisible chatting layout.
+         * If you drag from right to left, open chatting layout
+         * If you drag from left to right, close chatting layout.
+         */
         gestureDetector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
             float xFirst;
             float xLast;
@@ -195,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Log.d("MainActivity", "onCreate() - success");
     }
 
     @Override
@@ -204,12 +220,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("asdfasdf", "akakakakakak");
+        Log.d("MainActivity", "onActivityResult");
+
+        Log.d("MainActivity", "onActivityResult - requestCode : " + requestCode);
         switch (requestCode) {
             case SETTING_CALL:
                 if (resultCode == RESULT_OK) {
                     setting = data.getExtras().getParcelable("setting");
-                    Log.d("asdfasdf", "maxTmp"+setting.getTmp_max());
                     sendMessageToChatbot(dataHandler.sendSetting(setting));
                 }
                 break;
@@ -221,9 +238,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
-                Log.d("asdfasdf", "akakakakakak");
                 if (resultCode == RESULT_OK && data != null && data.getExtras() != null) {
-                    Log.d("asdfasdf", "akakakakakak");
                     String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
                         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
@@ -243,8 +258,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Condition Update
+    /**
+     * @breif
+     * Get the bowl contidion data and using handler for update UI
+     * @param feedtime
+     * @param temperature
+     * @param illumination
+     * @param turbidity
+     */
     public void onConditionUpdate( String feedtime, String temperature, String illumination, String turbidity) {
+        Log.d("MainActivity", "onConditionUpdate");
+
         Message msg = fcmHandler.obtainMessage();
         Bundle bundle = new Bundle();
 
@@ -260,8 +284,15 @@ public class MainActivity extends AppCompatActivity {
         fcmHandler.sendMessage(msg);
     }
 
-    // Control Message
+    /**
+     * @breif
+     * According to message type, decide which handler is worked
+     * @param type
+     * @param body
+     */
     public void onControlMessage(String type, String body) {
+        Log.d("MainActivity", "onControlMessage");
+
         Message msg = fcmHandler.obtainMessage();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
@@ -279,7 +310,14 @@ public class MainActivity extends AppCompatActivity {
         fcmHandler.sendMessage(msg);
     }
 
+    /**
+     * @brief
+     * For using BlubBlub application, user must Identify Application.
+     * For Identitiy, send our secret string.
+     */
     public void IdentityApplication() {
+        Log.d("MainActivity", "IdentityApplicaton");
+
         // To chatbot server
         sendMessageToChatbot(dataHandler.sendIdentity("chatbot"));
 
@@ -287,33 +325,53 @@ public class MainActivity extends AppCompatActivity {
         sendRequestToBowl("인증");
     }
 
-    public void sendRequestToBowl(String method) {
-        if (method.equals("인증")) {
-            new SendToBowl(method, dataHandler.sendIdentity("bowl"));
-        } else  {
-            new SendToBowl(method, dataHandler.SendToken("bowl"));
+    /**
+     * @brief
+     * send message to Bowl for control Bowl
+     * @param type
+     */
+    public void sendRequestToBowl(String type) {
+        Log.d("MainActivity", "sendRequestToBowl");
 
-            if (method.equals("먹이")) {
+        if (type.equals("인증")) {
+            new SendToBowl(type, dataHandler.sendIdentity("bowl"));
+        } else  {
+            new SendToBowl(type, dataHandler.SendToken("bowl"));
+
+            if (type.equals("먹이")) {
                 conditionBar.controllFeedBtn(false);
                 countInitialize();
             }
         }
     }
 
+    /**
+     * @brief
+     * Send user message to chatbot server for receive response message.
+     * @param message
+     */
     public void sendMessageToChatbot(String message) {
-            new SendToChatbot("163.152.219.171", 8002, message);
+        Log.d("MainActivity", "sendMessageToChatbot");
+
+        new SendToChatbot("163.152.219.171", 8002, message);
     }
 
+    /**
+     * @brief
+     * If you receive FCM message in background state, for receive message data, you must use getIntent().
+     * If you touch FCM message in background state, application restarted. So you can user onResume() for receive FCM message data.
+     */
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("MainActivity", "onResume()");
+
         Intent intent = getIntent();
         if(intent.getExtras() != null) {
-            Log.d("asdfasdf", "정보 받았당~" + intent.getExtras());
             String type = intent.getExtras().getString("type");
-            Log.d("asdfasdf", type);
             String body = intent.getExtras().getString("body");
-            Log.d("asdfasdf", body);
+
+            Log.d("MainActivity", "FCM Data - type : "+type+", body : " + body);
 
             onControlMessage(type, body);
         }

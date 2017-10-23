@@ -3,6 +3,7 @@ package beyond_imagination.blubblub.pSetting;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.RadioGroup;
 
 import beyond_imagination.blubblub.R;
@@ -17,10 +18,14 @@ import beyond_imagination.blubblub.R;
  * @author Yehun Park
  */
 public class AutoRadioGroup extends RadioGroup {
+    /****************/
     /*** Variable ***/
+    /****************/
     SettingActivity settingActivity;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public AutoRadioGroup(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
@@ -46,6 +51,7 @@ public class AutoRadioGroup extends RadioGroup {
                 }
             }
         });
+        Log.d("AutoRadioGroup", "init()-success");
     }
 
     void setAuto(boolean isAuto) {

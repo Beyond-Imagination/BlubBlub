@@ -36,7 +36,7 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
-        Log.d("asdfasdf", "onMessageReceived 실행");
+        Log.d("FCMMessagingService", "onMessageReceived 실행");
 
         if (remoteMessage.getData().get("type").equals("대화") == false) {
             receiveNotification(remoteMessage.getData().get("body"));

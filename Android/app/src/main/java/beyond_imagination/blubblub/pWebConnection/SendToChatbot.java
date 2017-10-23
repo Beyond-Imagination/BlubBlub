@@ -13,14 +13,15 @@ import java.net.Socket;
  * Created by cru65 on 2017-09-22.
  **/
 /**
- * @file ChattingLayout.java
+ * @file SendToChatbot.java
  * @breif
- * Class include all of things about chatting
- * Connect with chatbot server and Google Calendar API
+ * Class send message to Chatbot server
  * @author Yehun Park
  */
 public class SendToChatbot extends Thread {
+    /****************/
     /*** Variable ***/
+    /****************/
     String address;
     String data;
     int port;
@@ -29,7 +30,9 @@ public class SendToChatbot extends Thread {
 
     DataOutputStream dataOutputStream;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public SendToChatbot(String address, int port, String data) {
         this.address = address;
         this.port = port;
@@ -44,10 +47,8 @@ public class SendToChatbot extends Thread {
             socket = new Socket(address, port);
 
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
-
-            // dataOutputStream.writeBytes(FirebaseInstanceId.getInstance().getToken());
-            Log.d("asdfadsf", data);
             dataOutputStream.write(data.getBytes("UTF-8"));
+            Log.d("SendToChatbot", "DATA : " + data);
             dataOutputStream.flush();
             dataOutputStream.close();
 

@@ -21,7 +21,9 @@ import beyond_imagination.blubblub.Setting;
  * @author Yehun Park
  */
 public class SettingActivity extends AppCompatActivity {
+    /****************/
     /*** Variable ***/
+    /****************/
     private Setting setting;
     private AutoRadioGroup autoRadioGroup;
     private FeedCycleSpinner feedCycleSpinner;
@@ -31,7 +33,9 @@ public class SettingActivity extends AppCompatActivity {
     private SaveButton saveButton;
     private CancelButton cancelButton;
 
+    /****************/
     /*** Function ***/
+    /****************/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,8 @@ public class SettingActivity extends AppCompatActivity {
         maxTempSpinner.setMaxTemp(setting.getTmp_max());
         minTempSpinner.setMinTemp(setting.getTmp_min());
         illuminationSpinner.setLuxMax(setting.getIllum_min());
+
+        Log.d("SettingActivity", "init()-success");
     }
 
     ////

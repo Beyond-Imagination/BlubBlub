@@ -16,16 +16,20 @@ import beyond_imagination.blubblub.MainActivity;
  * @breif
  * Class get condition data from website
  * Connect website(bowl server) and Crawling HTML code.
- * Get conditioni data from HTML code and update condition data in application
+ * Get condition data from HTML code and update condition data in application
  * This work execute per every 1 second.
  * @author Yehun Park
  */
 public class GetConditionData extends AsyncTask<MainActivity, String, String> {
+    /****************/
     /*** Variable ***/
+    /****************/
     MainActivity mainActivity;
     boolean isRunning = false;
 
-    /*** Fungtion ***/
+    /****************/
+    /*** Function ***/
+    /****************/
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -67,7 +71,9 @@ public class GetConditionData extends AsyncTask<MainActivity, String, String> {
         while (isRunning) {
             temp = System.currentTimeMillis();
 
-            if ((temp - time) > 1000) {
+            if ((temp - time) > 10000) {
+                Log.d("GetConditionData", "Get condition Data");
+
                 post.request();
 
                 int statusCode = post.getHttpStatusCode();
@@ -85,7 +91,7 @@ public class GetConditionData extends AsyncTask<MainActivity, String, String> {
                     feedtime = values[7];
 
                     for (int i = 1; i < values.length; i += 2) {
-                        Log.d("Http", values[i]);
+                        Log.d("GetConditionData", values[i]);
                     }
 
                     // 데이터 전송 - AsyncTask의 progressupdate 접근. Main Thread임.
