@@ -27,6 +27,10 @@ class Sensors(Thread):
 			serialFromArduino.flushInput()
 	def run(self):
 		while True:
-			print(Data.illuminance,Data.turbidity,Data.temperature)
+			print("Temperature :",Data.temperature,end="  ")
+			print("Illuminance :",Data.illuminance,end="  ")
+			print("Turbidity :",Data.turbidity,end="  ")
+			print("FeedingTime :",Data.time)
+			print("-"*70)
 			self.sensing()
 			time.sleep(1)
