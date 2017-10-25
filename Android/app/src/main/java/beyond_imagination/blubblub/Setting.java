@@ -27,6 +27,7 @@ public class Setting implements Parcelable{
     private int tmp_max;
     private int tmp_min;
     // 조도
+    private int illum_max;
     private int illum_min;
 
     /****************/
@@ -36,16 +37,20 @@ public class Setting implements Parcelable{
     {
         auto = false;
         feed_cycle = 6;
-        tmp_max = 25;
+        tmp_max = 30;
         tmp_min = 20;
-        illum_min = 0;
+        illum_max = 60;
+        illum_min = 20;
     }
+
+    //public Setting(int auto, int feed_cycle,)
 
     protected Setting(Parcel in) {
         auto = (in.readInt() == 1);
         feed_cycle = in.readInt();
         tmp_max = in.readInt();
         tmp_min = in.readInt();
+        illum_max = in.readInt();
         illum_min = in.readInt();
     }
 
@@ -73,6 +78,7 @@ public class Setting implements Parcelable{
         dest.writeInt(feed_cycle);
         dest.writeInt(tmp_max);
         dest.writeInt(tmp_min);
+        dest.writeInt(illum_max);
         dest.writeInt(illum_min);
     }
 
@@ -111,11 +117,19 @@ public class Setting implements Parcelable{
         this.tmp_min = tmp_min;
     }
 
+    public int getIllum_max() {
+        return illum_max;
+    }
+
+    public void setIllum_max(int illum_max) {
+        this.illum_max = illum_max;
+    }
+
     public int getIllum_min() {
         return illum_min;
     }
 
-    public void setIllum_min(int lux_max) {
-        this.illum_min = lux_max;
+    public void setIllum_min(int lux_min) {
+        this.illum_min = lux_min;
     }
 }

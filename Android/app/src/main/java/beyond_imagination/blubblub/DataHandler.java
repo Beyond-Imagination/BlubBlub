@@ -62,6 +62,32 @@ public class DataHandler {
 
     /**
      * @breif
+     * Just send message by JSON type.
+     * @param message
+     * @param type
+     * @return
+     */
+    public String sendMessage(String message, String type) {
+        Log.d("DataHandler", "sendMessage");
+
+        JSONObject data = new JSONObject();
+
+        try {
+            data.put("type", type);
+            data.put("message", message);
+            data.put("token", token);
+
+            return data.toString();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * @breif
      * Send token data by JSON type.
      * @param where
      * @return
@@ -80,8 +106,7 @@ public class DataHandler {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else{
             String data = "token="+token;
             return data;
         }
@@ -135,6 +160,7 @@ public class DataHandler {
             data.put("feedcycle", setting.getFeed_cycle());
             data.put("maxtemp", setting.getTmp_max());
             data.put("mintemp", setting.getTmp_min());
+            data.put("maxillum", setting.getIllum_max());
             data.put("minillum", setting.getIllum_min());
         } catch (JSONException e) {
             e.printStackTrace();

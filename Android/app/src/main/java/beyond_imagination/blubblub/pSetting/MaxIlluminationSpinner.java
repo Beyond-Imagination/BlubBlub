@@ -6,18 +6,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 /**
  * Created by cru65 on 2017-08-04.
  */
+
 /**
- * @file IlluminationSpinner.java
+ * @file MaxIlluminationSpinner.java
  * @breif
  * Class custom view about Spinner
  * @author Yehun Park
  */
-public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpinner {
+public class MaxIlluminationSpinner extends android.support.v7.widget.AppCompatSpinner {
     /****************/
     /*** Variable ***/
     /****************/
@@ -28,13 +28,13 @@ public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpin
     /****************/
     /*** Function ***/
     /****************/
-    public IlluminationSpinner(Context context) {
+    public MaxIlluminationSpinner(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
         init();
     }
 
-    public IlluminationSpinner(Context context, AttributeSet attrs) {
+    public MaxIlluminationSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
         settingActivity = (SettingActivity)context;
         init();
@@ -54,7 +54,7 @@ public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpin
         setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                settingActivity.getSetting().setIllum_min(items[position]);
+                settingActivity.getSetting().setIllum_max(items[position]);
             }
 
             @Override
@@ -62,10 +62,10 @@ public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpin
 
             }
         });
-        Log.d("IlluminationSpinner", "init()-success");
+        Log.d("MaxIlluminationSpinner", "init()-success");
     }
 
-    void setLuxMax(int luxMax) {
-        setSelection((luxMax - 10) / 10);
+    void setLux(int lux) {
+        setSelection((lux - 10) / 10);
     }
 }

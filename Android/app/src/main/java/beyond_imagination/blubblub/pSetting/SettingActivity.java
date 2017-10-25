@@ -12,13 +12,13 @@ import beyond_imagination.blubblub.Setting;
 /**
  * Created by cru65 on 2017-08-03.
  */
+
 /**
+ * @author Yehun Park
  * @file SettingActivity.java
- * @breif
- * Class include all of things about setting
+ * @breif Class include all of things about setting
  * You can modify your setting values.
  * If you change your setting values, send your setting data to chatbot server.
- * @author Yehun Park
  */
 public class SettingActivity extends AppCompatActivity {
     /****************/
@@ -29,14 +29,20 @@ public class SettingActivity extends AppCompatActivity {
     private FeedCycleSpinner feedCycleSpinner;
     private MaxTempSpinner maxTempSpinner;
     private MinTempSpinner minTempSpinner;
-    private IlluminationSpinner illuminationSpinner;
+    private MaxIlluminationSpinner maxilluminationSpinner;
+    private MinIlluminationSpinner minilluminationSpinner;
     private SaveButton saveButton;
     private CancelButton cancelButton;
 
     /****************/
     /*** Function ***/
     /****************/
+    public SettingActivity() {
+
+    }
+
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
@@ -45,13 +51,13 @@ public class SettingActivity extends AppCompatActivity {
         feedCycleSpinner = (FeedCycleSpinner) findViewById(R.id.feedcyclespinner);
         maxTempSpinner = (MaxTempSpinner) findViewById(R.id.maxtempspinner);
         minTempSpinner = (MinTempSpinner) findViewById(R.id.mintempspinner);
-        illuminationSpinner = (IlluminationSpinner) findViewById(R.id.luxspinner);
+        maxilluminationSpinner = (MaxIlluminationSpinner) findViewById(R.id.maxillumspinner);
+        minilluminationSpinner = (MinIlluminationSpinner) findViewById(R.id.minillumspinner);
         saveButton = (SaveButton) findViewById(R.id.savebtn);
         cancelButton = (CancelButton) findViewById(R.id.cancelBtn);
 
         Intent intent = getIntent();
         setting = intent.getParcelableExtra("setting");
-        Log.d("asdfasdf", "setting" + setting.getTmp_max());
 
         init();
     }
@@ -61,7 +67,8 @@ public class SettingActivity extends AppCompatActivity {
         feedCycleSpinner.setFeedCycle(setting.getFeed_cycle());
         maxTempSpinner.setMaxTemp(setting.getTmp_max());
         minTempSpinner.setMinTemp(setting.getTmp_min());
-        illuminationSpinner.setLuxMax(setting.getIllum_min());
+        maxilluminationSpinner.setLux(setting.getIllum_max());
+        minilluminationSpinner.setLux(setting.getIllum_min());
 
         Log.d("SettingActivity", "init()-success");
     }
