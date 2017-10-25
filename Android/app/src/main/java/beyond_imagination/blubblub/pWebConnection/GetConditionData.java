@@ -11,14 +11,14 @@ import beyond_imagination.blubblub.MainActivity;
 /**
  * Created by cru65 on 2017-08-21.
  */
+
 /**
+ * @author Yehun Park
  * @file GetConditionData.java
- * @breif
- * Class get condition data from website
+ * @breif Class get condition data from website
  * Connect website(bowl server) and Crawling HTML code.
  * Get condition data from HTML code and update condition data in application
- * This work execute per every 1 second.
- * @author Yehun Park
+ * This work execute per every 10 second.
  */
 public class GetConditionData extends AsyncTask<MainActivity, String, String> {
     /****************/
@@ -71,6 +71,7 @@ public class GetConditionData extends AsyncTask<MainActivity, String, String> {
         while (isRunning) {
             temp = System.currentTimeMillis();
 
+            // 10초마다 웹서버에서 어항 상태 데이터 수신.
             if ((temp - time) > 10000) {
                 Log.d("GetConditionData", "Get condition Data");
 
@@ -79,7 +80,7 @@ public class GetConditionData extends AsyncTask<MainActivity, String, String> {
                 int statusCode = post.getHttpStatusCode();
 
                 // 반응이 있을 때만, 텍스트 편집
-                if(statusCode == 200) {
+                if (statusCode == 200) {
                     data = post.getBody();
 
                     // 공백까지 처리하는 split

@@ -21,16 +21,17 @@ import beyond_imagination.blubblub.pChatting.ChattingLayout;
 import beyond_imagination.blubblub.pCondition.ConditionBar;
 import beyond_imagination.blubblub.pCondition.ControlMessage;
 import beyond_imagination.blubblub.pSetting.SettingButton;
+import beyond_imagination.blubblub.pWebConnection.AutoService;
 import beyond_imagination.blubblub.pWebConnection.GetConditionData;
 import beyond_imagination.blubblub.pWebConnection.SendToBowl;
 import beyond_imagination.blubblub.pWebConnection.SendToChatbot;
 import beyond_imagination.blubblub.pWebView.MainWebView;
+
 /**
- * @file MainActivity.java
- * @breif
- * This class is core of this application.
- * Almost class connected with MainActivity and worked by MainActivity.
  * @author Yehun Park
+ * @file MainActivity.java
+ * @breif This class is core of this application.
+ * Almost class connected with MainActivity and worked by MainActivity.
  */
 public class MainActivity extends AppCompatActivity {
     /****************/
@@ -89,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private FCMHandler fcmHandler;
 
     /**
-     * @breif
-     * Just main Thread access to UI. So, in sub Thread, for access to UI, using Handler and access to main Thread
+     * @breif Just main Thread access to UI. So, in sub Thread, for access to UI, using Handler and access to main Thread
      * Type : Update condition, FCM problem, send message, receive message
      */
     class FCMHandler extends Handler {
@@ -116,10 +116,11 @@ public class MainActivity extends AppCompatActivity {
                     chattingLayout.sendMessage("나 : " + bundle.getString("body"));
                     break;
                 case RECEIVE_MESSAGE:
-                    chattingLayout.receiveMessage("붕어 : " +bundle.getString("body"));
-                    break;
-
-                case GET_CALENDAR_DATA:
+                    if (bundle.getString("type").equals("날씨")) {
+                        chattingLayout.receiveWeather(bundle.getString("body"));
+                    } else {
+                        chattingLayout.receiveMessage("붕어 : " + bundle.getString("body"));
+                    }
                     break;
             }
         }
@@ -133,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Database.setDatabase(this);
+
         accumulateCount = 0;
 
         mainWebView = (MainWebView) findViewById(R.id.webView);
@@ -141,9 +144,11 @@ public class MainActivity extends AppCompatActivity {
         settingBtn = (SettingButton) findViewById(R.id.button_setting);
         controlMessage = (ControlMessage) findViewById(R.id.controlview);
 
-        setting = new Setting();
-
         dataHandler = new DataHandler(FirebaseInstanceId.getInstance().getToken(), "Beyond_Imagination");
+
+        // Read Setting data from Database
+        setting = Database.readFromDatabase();
+        sendMessageToChatbot(dataHandler.sendSetting(setting));
 
         IdentityApplication();
 
@@ -227,7 +232,19 @@ public class MainActivity extends AppCompatActivity {
             case SETTING_CALL:
                 if (resultCode == RESULT_OK) {
                     setting = data.getExtras().getParcelable("setting");
+                    Database.updateRecord(setting);
                     sendMessageToChatbot(dataHandler.sendSetting(setting));
+
+                    if (setting.getAuto() == true) {
+                        Intent intent = new Intent(this, AutoService.class);
+                        intent.putExtra("setting", setting);
+                        intent.putExtra("token", dataHandler.getToken());
+                        intent.putExtra("secret", dataHandler.getSecret());
+                        startService(intent);
+                    } else {
+                        Intent intent = new Intent(this, AutoService.class);
+                        stopService(intent);
+                    }
                 }
                 break;
 
@@ -259,14 +276,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @breif
-     * Get the bowl contidion data and using handler for update UI
      * @param feedtime
      * @param temperature
      * @param illumination
      * @param turbidity
+     * @breif Get the bowl contidion data and using handler for update UI
      */
-    public void onConditionUpdate( String feedtime, String temperature, String illumination, String turbidity) {
+    public void onConditionUpdate(String feedtime, String temperature, String illumination, String turbidity) {
         Log.d("MainActivity", "onConditionUpdate");
 
         Message msg = fcmHandler.obtainMessage();
@@ -285,10 +301,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @breif
-     * According to message type, decide which handler is worked
      * @param type
      * @param body
+     * @breif According to message type, decide which handler is worked
      */
     public void onControlMessage(String type, String body) {
         Log.d("MainActivity", "onControlMessage");
@@ -300,9 +315,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (type.equals("대화보냄")) {
             msg.what = SEND_MESSAGE;
-        } else if (type.equals("대화")) {
+        } else if (type.equals("대화") || type.equals("날씨")) {
             msg.what = RECEIVE_MESSAGE;
-        } else if (type.equals("먹이") || type.equals("더움") || type.equals("추움") || type.equals("어두움")|| type.equals("밝음") || type.equals("탁함")) {
+        } else if (type.equals("먹이") || type.equals("더움") || type.equals("추움") || type.equals("어두움") || type.equals("밝음") || type.equals("탁함")) {
             msg.what = FCM_PROBLEM;
         }
         msg.setData(bundle);
@@ -311,8 +326,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @brief
-     * For using BlubBlub application, user must Identify Application.
+     * @brief For using BlubBlub application, user must Identify Application.
      * For Identitiy, send our secret string.
      */
     public void IdentityApplication() {
@@ -326,29 +340,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @brief
-     * send message to Bowl for control Bowl
      * @param type
+     * @brief send message to Bowl for control Bowl
      */
     public void sendRequestToBowl(String type) {
         Log.d("MainActivity", "sendRequestToBowl");
 
         if (type.equals("인증")) {
             new SendToBowl(type, dataHandler.sendIdentity("bowl"));
-        } else  {
+        } else {
             new SendToBowl(type, dataHandler.SendToken("bowl"));
 
             if (type.equals("먹이")) {
                 conditionBar.controllFeedBtn(false);
                 countInitialize();
+            } else if (type.equals("어두움")) {
+                conditionBar.controllIllumSwitch(true);
+            } else if (type.equals("밝음")) {
+                conditionBar.controllIllumSwitch(false);
             }
         }
     }
 
     /**
-     * @brief
-     * Send user message to chatbot server for receive response message.
      * @param message
+     * @brief Send user message to chatbot server for receive response message.
      */
     public void sendMessageToChatbot(String message) {
         Log.d("MainActivity", "sendMessageToChatbot");
@@ -357,8 +373,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * @brief
-     * If you receive FCM message in background state, for receive message data, you must use getIntent().
+     * @brief If you receive FCM message in background state, for receive message data, you must use getIntent().
      * If you touch FCM message in background state, application restarted. So you can user onResume() for receive FCM message data.
      */
     @Override
@@ -367,22 +382,21 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "onResume()");
 
         Intent intent = getIntent();
-        if(intent.getExtras() != null) {
+        if (intent.getExtras() != null) {
             String type = intent.getExtras().getString("type");
             String body = intent.getExtras().getString("body");
 
-            Log.d("MainActivity", "FCM Data - type : "+type+", body : " + body);
+            Log.d("MainActivity", "FCM Data - type : " + type + ", body : " + body);
 
             onControlMessage(type, body);
         }
     }
 
-    public void countAccumulate()
-    {
+    public void countAccumulate() {
         accumulateCount++;
     }
 
-    public void countInitialize(){
+    public void countInitialize() {
         accumulateCount = 0;
     }
 
@@ -408,6 +422,4 @@ public class MainActivity extends AppCompatActivity {
     public DataHandler getDataHandler() {
         return dataHandler;
     }
-
-
 }

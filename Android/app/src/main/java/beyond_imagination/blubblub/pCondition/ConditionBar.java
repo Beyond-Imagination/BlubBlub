@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -49,7 +51,7 @@ public class ConditionBar extends LinearLayout {
     ImageView imagetemperature;
     TextView textquality;
     ImageView imagequality;
-    TextView textlight;
+    Switch lightswitch;
     ImageView imagelight;
     ImageView imagetotal;
     TextView texttotal;
@@ -105,9 +107,20 @@ public class ConditionBar extends LinearLayout {
             }
         });
 
+        lightswitch = (Switch) findViewById(R.id.lightSwitch);
+        lightswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mainActivity.sendRequestToBowl("어두움");
+                } else {
+                    mainActivity.sendRequestToBowl("밝음");
+                }
+            }
+        });
+
         texttemperature = (TextView) findViewById(R.id.textTemperature);
         textquality = (TextView) findViewById(R.id.textQuality);
-        textlight = (TextView) findViewById(R.id.textLight);
         texttotal = (TextView) findViewById(R.id.textTotal);
 
         imagefeed = (ImageView) findViewById(R.id.viewFeed);
@@ -165,14 +178,15 @@ public class ConditionBar extends LinearLayout {
         // 8시간 이상이면 자동으로 버튼 활성화
         /* 에러 발생 */
         // 해결 : http://freeism.co.kr/tc/801
-        Calendar calendar = Calendar.getInstance(Locale.KOREAN);
-        int hour = calendar.get(Calendar.HOUR);
+        Calendar calendar = Calendar.getInstance(Locale.KOREA);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
 
         int time = (hour * 60) + min;
 
         // 1시간 전 부터 먹이 주기 가능
-        if ((time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() - 1) * 60)
+        if (Math.abs(time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() - 1) * 60)
             feedbtn.setEnabled(true);
 
         String showtime;
@@ -187,7 +201,8 @@ public class ConditionBar extends LinearLayout {
         texttemperature.setText(temperature);
 
         // illumination
-        textlight.setText(illumination);
+        //lightbtn.setText(illumination);
+        lightswitch.setText(illumination);
 
         // turbidity
         if (Float.valueOf(turbidity) == 0.0) {
@@ -251,6 +266,19 @@ public class ConditionBar extends LinearLayout {
             if (feedbtn.getVisibility() == View.VISIBLE) {
                 feedbtn.setVisibility(View.INVISIBLE);
             }
+        }
+    }
+
+    /**
+     * @breif
+     * Control Illumination Switch, On and Off.
+     * @param order
+     */
+    public void controllIllumSwitch(boolean order) {
+        if (order) {
+            lightswitch.setChecked(true);
+        } else {
+            lightswitch.setChecked(false);
         }
     }
 

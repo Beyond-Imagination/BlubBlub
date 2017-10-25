@@ -38,13 +38,16 @@ public class FCMMessagingService extends com.google.firebase.messaging.FirebaseM
         //super.onMessageReceived(remoteMessage);
         Log.d("FCMMessagingService", "onMessageReceived 실행");
 
-        if (remoteMessage.getData().get("type").equals("대화") == false) {
+        if ((remoteMessage.getData().get("type").equals("대화") == true) || (remoteMessage.getData().get("type").equals("날씨") == true)) {
+            receiveData(remoteMessage.getData().get("type"), remoteMessage.getData().get("body"));
+        } else {
             receiveNotification(remoteMessage.getData().get("body"));
+            receiveData(remoteMessage.getData().get("type"), remoteMessage.getData().get("body"));
         }
-        receiveData(remoteMessage.getData().get("type"), remoteMessage.getData().get("body"));
     }
 
     private void receiveNotification(String messageBody) {
+        Log.d("FCMMessagingService", "receiveNotification 실행");
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,

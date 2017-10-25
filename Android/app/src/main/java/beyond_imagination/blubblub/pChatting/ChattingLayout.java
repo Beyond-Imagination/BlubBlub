@@ -138,6 +138,11 @@ public class ChattingLayout extends LinearLayout{
 
             secretaryService.setScheduleData(message);
 
+        } else if (message.toString().contains("날씨")) {
+            Log.d("ChattingLayout", "checkCommand-날씨");
+
+            mainActivity.sendMessageToChatbot(mainActivity.getDataHandler().sendMessage(result, "weather"));
+
         } else {
             // communication with chatbot server
             Log.d("ChattingLayout", "checkCommand-대화");
@@ -174,6 +179,33 @@ public class ChattingLayout extends LinearLayout{
      */
     public void receiveMessage(String message) {
         Log.d("ChattingLayout", "receciveMessage-message : " + message);
+        textBuilder.append("\n" + message);
+        chatting.setText(textBuilder.toString());
+
+        // scroll down chatting text
+        scrollView.post(new Runnable() {
+            public void run() {
+                scrollView.scrollTo(0, chatting.getHeight());
+            }
+        });
+    }
+
+    /**
+     * @brief
+     * Show which message i send
+     * @param message
+     */
+    public void receiveWeather(String message) {
+        Log.d("ChattingLayout", "receciveMessage-weather : " + message);
+
+        String[] temp = message.split("\\.");
+        message = "붕어 : ";
+
+        for (int i = 0; i<temp.length; i++) {
+            temp[i] = "\n" + temp[i] + ".";
+            message += temp[i];
+        }
+
         textBuilder.append("\n" + message);
         chatting.setText(textBuilder.toString());
 

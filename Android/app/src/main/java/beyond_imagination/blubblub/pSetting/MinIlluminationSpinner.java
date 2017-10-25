@@ -12,39 +12,39 @@ import android.widget.Spinner;
  * Created by cru65 on 2017-08-04.
  */
 /**
- * @file MaxTempSpinner.java
+ * @file MinIlluminationSpinner.java
  * @breif
  * Class custom view about Spinner
  * @author Yehun Park
  */
-public class MaxTempSpinner extends android.support.v7.widget.AppCompatSpinner {
+public class MinIlluminationSpinner extends android.support.v7.widget.AppCompatSpinner {
     /****************/
     /*** Variable ***/
     /****************/
-    private SettingActivity settingActivity;
+    SettingActivity settingActivity;
     private ArrayAdapter<Integer> adapter;
     private Integer[] items;
 
     /****************/
     /*** Function ***/
     /****************/
-    public MaxTempSpinner(Context context) {
+    public MinIlluminationSpinner(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
         init();
     }
 
-    public MaxTempSpinner(Context context, AttributeSet attrs) {
+    public MinIlluminationSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
         settingActivity = (SettingActivity)context;
         init();
     }
 
-    private void init() {
+    private void init(){
         items = new Integer[10];
 
         for(int i = 0; i<10; i++) {
-            items[i] = i + 25;
+            items[i] = (i+1)*10;
         }
 
         adapter = new ArrayAdapter<Integer>(settingActivity, android.R.layout.simple_spinner_item, items);
@@ -54,7 +54,7 @@ public class MaxTempSpinner extends android.support.v7.widget.AppCompatSpinner {
         setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                settingActivity.getSetting().setTmp_max(items[position]);
+                settingActivity.getSetting().setIllum_min(items[position]);
             }
 
             @Override
@@ -62,10 +62,10 @@ public class MaxTempSpinner extends android.support.v7.widget.AppCompatSpinner {
 
             }
         });
-        Log.d("MaxTempSpinner", "init()-success");
+        Log.d("MinIlluminationSpinner", "init()-success");
     }
 
-    void setMaxTemp(int maxTemp) {
-        setSelection(maxTemp - 25);
+    void setLux(int lux) {
+        setSelection((lux - 10) / 10);
     }
 }

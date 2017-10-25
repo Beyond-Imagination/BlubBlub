@@ -11,7 +11,7 @@
     android:paddingRight="20dp"
     android:paddingStart="20dp"
     android:paddingTop="0dp"
-    android:weightSum="13">
+    android:weightSum="15">
 
     <TextView
         android:id="@+id/textView2"
@@ -174,6 +174,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/MinTempLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2">
@@ -185,6 +186,7 @@
             android:src="@drawable/setting" />
 
         <LinearLayout
+            android:id="@+id/mintemplinearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
@@ -215,6 +217,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/MaxIllum"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2">
@@ -226,6 +229,51 @@
             android:src="@drawable/setting" />
 
         <LinearLayout
+            android:id="@+id/maxillumlinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:padding="0dp">
+
+            <TextView
+                android:id="@+id/maxillum"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="[ Max Illumination ]"
+                android:textStyle="bold" />
+
+            <beyond_imagination.blubblub.pSetting.MaxIlluminationSpinner
+                android:id="@+id/maxillumspinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/MinIllum"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/setting" />
+
+        <LinearLayout
+            android:id="@+id/minillumlinear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
@@ -235,7 +283,7 @@
             android:weightSum="2">
 
             <TextView
-                android:id="@+id/luxdegree"
+                android:id="@+id/minillum"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -245,8 +293,8 @@
                 android:text="[ Min Illumination ]"
                 android:textStyle="bold" />
 
-            <beyond_imagination.blubblub.pSetting.IlluminationSpinner
-                android:id="@+id/luxspinner"
+            <beyond_imagination.blubblub.pSetting.MinIlluminationSpinner
+                android:id="@+id/minillumspinner"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -254,6 +302,7 @@
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp" />
         </LinearLayout>
+
     </FrameLayout>
 
     <LinearLayout
