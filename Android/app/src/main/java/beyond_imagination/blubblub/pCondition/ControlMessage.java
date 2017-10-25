@@ -25,7 +25,9 @@ import beyond_imagination.blubblub.R;
  * @author Yehun Park
  */
 public class ControlMessage extends LinearLayout {
+    /****************/
     /*** Variable ***/
+    /****************/
     TextView textView;
     Button button_ok;
     Button button_cancel;
@@ -34,7 +36,9 @@ public class ControlMessage extends LinearLayout {
 
     String type;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public ControlMessage(Context context) {
         super(context);
         mainActivity = (MainActivity)context;
@@ -68,9 +72,7 @@ public class ControlMessage extends LinearLayout {
         button_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d("asdfasdf", type);
-
+                Log.d("ControlMessage", "ControlMessage-type:" + type);
                 sendMesssage();
                 setVisibility(INVISIBLE);
             }
@@ -82,6 +84,8 @@ public class ControlMessage extends LinearLayout {
                 setVisibility(View.INVISIBLE);
             }
         });
+
+        Log.d("ControlMessage", "init()-success");
     }
 
     private void sendMesssage()
@@ -102,9 +106,8 @@ public class ControlMessage extends LinearLayout {
     }
 
     public void onUpdate(String type, String body) {
+        Log.d("ControlMessage", "onUpdate");
         textView.setText(body);
         this.type = type;
-        Log.d("asdfasdf", type);
-        Log.d("asdfasdf", body);
     }
 }

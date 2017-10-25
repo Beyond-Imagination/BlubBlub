@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,10 +19,14 @@ import android.widget.Button;
  * @author Yehun Park
  */
 public class SaveButton extends android.support.v7.widget.AppCompatButton {
+    /****************/
     /*** Variable ***/
+    /****************/
     private SettingActivity settingActivity;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public SaveButton(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
@@ -51,5 +56,6 @@ public class SaveButton extends android.support.v7.widget.AppCompatButton {
                 settingActivity.finish();
             }
         });
+        Log.d("SaveButton", "init()-success");
     }
 }

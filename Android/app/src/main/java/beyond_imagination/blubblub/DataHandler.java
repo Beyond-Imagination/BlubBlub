@@ -1,5 +1,7 @@
 package beyond_imagination.blubblub;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,18 +9,22 @@ import org.json.JSONObject;
  * Created by cru65 on 2017-09-22.
  */
 /**
- * @file ChattingLayout.java
+ * @file DataHandler.java
  * @breif
- * Class include all of things about chatting
- * Connect with chatbot server and Google Calendar API
+ * Class format message according to situations.
+ * Just send message, identify user, send token, send setting Info...
  * @author Yehun Park
  */
 public class DataHandler {
+    /****************/
     /*** Variable ***/
+    /****************/
     String token;
     String secret;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public DataHandler() {
         token = null;
         secret = null;
@@ -29,7 +35,15 @@ public class DataHandler {
         this.secret = secret;
     }
 
+    /**
+     * @breif
+     * Just send message by JSON type.
+     * @param message
+     * @return
+     */
     public String sendMessage(String message) {
+        Log.d("DataHandler", "sendMessage");
+
         JSONObject data = new JSONObject();
 
         try {
@@ -46,7 +60,15 @@ public class DataHandler {
         return null;
     }
 
+    /**
+     * @breif
+     * Send token data by JSON type.
+     * @param where
+     * @return
+     */
     public String SendToken(String where) {
+        Log.d("DataHandler", "sendToken");
+
         if(where.equals("chatbot")) {
             JSONObject data = new JSONObject();
 
@@ -67,7 +89,16 @@ public class DataHandler {
         return null;
     }
 
+    /**
+     * @breif
+     * Send Identity data to chatbot and bowl server at the first using time.
+     * By JSON type
+     * @param where
+     * @return
+     */
     public String sendIdentity(String where) {
+        Log.d("DataHandler", "sendIdentity");
+
         String data = new String();
         if (where.equals("chatbot")) {
             try {
@@ -87,8 +118,16 @@ public class DataHandler {
         return data;
     }
 
-    // Chatbot server
+    /**
+     * @breif
+     * Send changed setting data to Chatbot server.
+     * By JSON type.
+     * @param setting
+     * @return
+     */
     public String sendSetting(Setting setting) {
+        Log.d("DataHandler", "sendSettingData");
+
         JSONObject data = new JSONObject();
 
         try {

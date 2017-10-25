@@ -2,6 +2,7 @@ package beyond_imagination.blubblub.pSetting;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,12 +18,16 @@ import android.widget.Spinner;
  * @author Yehun Park
  */
 public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpinner {
+    /****************/
     /*** Variable ***/
+    /****************/
     SettingActivity settingActivity;
     private ArrayAdapter<Integer> adapter;
     private Integer[] items;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public IlluminationSpinner(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
@@ -57,6 +62,7 @@ public class IlluminationSpinner extends android.support.v7.widget.AppCompatSpin
 
             }
         });
+        Log.d("IlluminationSpinner", "init()-success");
     }
 
     void setLuxMax(int luxMax) {

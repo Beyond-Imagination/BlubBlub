@@ -2,6 +2,7 @@ package beyond_imagination.blubblub.pSetting;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,12 +18,16 @@ import android.widget.Spinner;
  * @author Yehun Park
  */
 public class MinTempSpinner extends android.support.v7.widget.AppCompatSpinner {
+    /****************/
     /*** Variable ***/
+    /****************/
     private SettingActivity settingActivity;
     private ArrayAdapter<Integer> adapter;
     private Integer[] items;
 
+    /****************/
     /*** Function ***/
+    /****************/
     public MinTempSpinner(Context context) {
         super(context);
         settingActivity = (SettingActivity)context;
@@ -57,6 +62,7 @@ public class MinTempSpinner extends android.support.v7.widget.AppCompatSpinner {
 
             }
         });
+        Log.d("MinTempSpinner", "init()-success");
     }
 
     void setMinTemp(int minTemp) {
