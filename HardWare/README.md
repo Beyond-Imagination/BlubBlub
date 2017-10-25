@@ -35,8 +35,3 @@
 >>+ 3. Cubicreator로 export한 stl파일을 열어 프린터 설정값에 맞추고 채우는 정도나 출력속도를 정한다
 >>+ 3. 해당 프린터기에 파일을 옮겨 프린트 한다.
 
-
-## License
-> Copyright (c) 2017, Beyond_Imagination  
-> This project is licenced under a Creative Commons license: 
-> http://creativecommons.org/licenses/by/2.5/
