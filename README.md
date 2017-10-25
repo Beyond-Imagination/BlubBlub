@@ -53,8 +53,3 @@
 > 5. 라즈베리파이에 Django웹서버와 MJPG-STREAMER파일 설치
 > 6. 서버용 컴퓨터에 챗봇서버 프로그램 설치
 > 7. 스마트폰에 뻐끔뻐끔 애플리케이션 설치
-
-## License
-> Copyright (c) 2017, Beyond_Imagination  
-> This project is licenced under a Creative Commons license: 
-> http://creativecommons.org/licenses/by/2.5/ 
