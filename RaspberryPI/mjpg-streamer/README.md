@@ -1,6 +1,7 @@
-We used 'mjpg-streamer' for monitoring the aquarium
+BlubBlub
+We used 'mjpg-streamer' for monitoring the aquarium.
 We downloaded the codes from the github the address is at the end of this file.
-
+========================================================================================
 
 
 mjpg-streamer
