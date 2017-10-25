@@ -5,6 +5,7 @@ from db import TokenDB
 from botengine import Chatbot
 from fcmRequest import FCMRequest
 from dataThread import DataThread
+from weather import WeatherRequest
 
 
 class ChatbotServer(Thread):
@@ -24,6 +25,8 @@ class ChatbotServer(Thread):
 
         self.dt = DataThread()
         self.dt.start()
+
+        self.weather = WeatherRequest()
 
 
     def run(self):
@@ -55,6 +58,9 @@ class ChatbotServer(Thread):
                     self.receiveMessage(dict)
                 elif dict['type'] == 'setting':
                     self.receiveSetting(dict)
+                elif dict['type'] == 'weather':
+                    self.requestweather(dict)
+
 
             conn.close()
 
@@ -77,7 +83,12 @@ class ChatbotServer(Thread):
         self.dt.setFeedingCycle(dict['feedcycle'])
         self.dt.setMaxTemperature(dict['maxtemp'])
         self.dt.setMinTemperature(dict['mintemp'])
+        self.dt.setMaxIlluminance(dict['maxillum'])
         self.dt.setMinIlluminance(dict['minillum'])
+
+    def requestweather(self, dict):
+        weather = self.weather.requestweather_seoul()
+        self.fcm.sendweathermessage(weather, dict['token'])
 
 
 chatbotServer = ChatbotServer()
