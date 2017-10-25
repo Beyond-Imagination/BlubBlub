@@ -28,6 +28,11 @@ class FCMRequest:
         result = self.push_service.notify_single_device(registration_id=token, message_title="뻐끔뻐끔", message_body=sentence, data_message=message)
         print(result)
 
+    def sendweathermessage(self, weather, token):
+        message = {"type": "날씨", "body": weather}
+        result = self.push_service.notify_single_device(registration_id=token, message_title="뻐끔뻐끔",message_body=weather, data_message=message)
+        print(result)
+
     def setTokenList(self, list):
         FCMRequest.tokenlist = [i[0] for i in list]
         print("savedToken :", FCMRequest.tokenlist)
