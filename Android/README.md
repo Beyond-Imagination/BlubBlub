@@ -117,10 +117,3 @@
 
 ## BUGS
 > 버그가 발견되면 해당 버그 현상을 cru6548@gmail.com 리포트해주시면 됩니다.
-
-## 저자
->박예훈 - Beyond_Imagination-고려대학교(세종)-https://github.com/gangjung
-
-## License
-> Copyright (c) 2017, Beyond_Imagination
-> This project is licenced under a Creative Commons license: http://creativecommons.org/licenses/by/2.5/
