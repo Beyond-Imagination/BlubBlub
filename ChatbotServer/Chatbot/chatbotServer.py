@@ -1,7 +1,7 @@
 import socket
 from threading import Thread
 import json
-from db import TokenDB
+from db import *
 from botengine import Chatbot
 from fcmRequest import FCMRequest
 from dataThread import DataThread
@@ -80,11 +80,12 @@ class ChatbotServer(Thread):
 
     def receiveSetting(self, dict):
         """사용자에게 받은 세팅값을 저장"""
-        self.dt.setFeedingCycle(dict['feedcycle'])
-        self.dt.setMaxTemperature(dict['maxtemp'])
-        self.dt.setMinTemperature(dict['mintemp'])
-        self.dt.setMaxIlluminance(dict['maxillum'])
-        self.dt.setMinIlluminance(dict['minillum'])
+        temp = SettingDB()
+        temp.updateSettingTable("feeding",dict['feedcycle'])
+        temp.updateSettingTable("maxtemp", dict['maxtemp'])
+        temp.updateSettingTable("mintemp", dict['mintemp'])
+        temp.updateSettingTable("maxillum", dict['maxillum'])
+        temp.updateSettingTable("minillum", dict['minillum'])
 
     def requestweather(self, dict):
         weather = self.weather.requestweather_seoul()
