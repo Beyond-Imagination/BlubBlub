@@ -74,6 +74,9 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
     // Identity
     GoogleAccountCredential mCredential;
 
+    // message
+    private String message = null;
+
     // REQUEST_CODES
     static final int REQUEST_ACCOUNT_PICKER = 1006;
     static final int REQUEST_AUTHORIZATION = 1007;
@@ -123,6 +126,16 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
     }
 
     /**
+     * Restart Calender System after permission check in MainActivity
+     */
+    public void reStartCalendar() {
+        if (this.message == null)
+            new MakeRequestTask(mCredential).start();
+        else
+            new InputDataTask(message).start();
+    }
+
+    /**
      * @param message
      * @brief Start Identify for using Google Service first, internet second
      * If you can use Google Service and internet, access to Google Calender API
@@ -130,6 +143,14 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
      * If getResultsFromApi's parameter have message, register schedule data
      */
     private void getResultsFromApi(String message) {
+        Log.d("SecretaryService", "getResultsFromApi start - message : " + message);
+
+        if (message == null) {
+            this.message = null;
+        } else {
+            this.message = message;
+        }
+
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
             Log.d("SecretaryService", "acquireGooglePlayServices");
@@ -385,7 +406,7 @@ public class SecretaryService implements EasyPermissions.PermissionCallbacks {
             }
 
             if (result == null) {
-                mainActivity.onControlMessage("대화", "일정 정보가 부족합니다.\\n년, 월, 일, 시작시간, 끝나는시간, \"내용\"을 말해주세요");
+                mainActivity.onControlMessage("대화", "일정 정보가 잘못 입력하셨습니다." + "\n"+"n년, 월, 일, 시작시간, 끝나는시간, \"내용\"을 말해주세요");
             } else {
                 mainActivity.onControlMessage("대화", "일정이 등록되었습니다~ 굿굿!");
             }

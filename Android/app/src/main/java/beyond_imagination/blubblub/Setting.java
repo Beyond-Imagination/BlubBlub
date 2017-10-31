@@ -39,7 +39,7 @@ public class Setting implements Parcelable{
         feed_cycle = 6;
         tmp_max = 30;
         tmp_min = 20;
-        illum_max = 60;
+        illum_max = 70;
         illum_min = 20;
     }
 

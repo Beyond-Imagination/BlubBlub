@@ -11,6 +11,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import beyond_imagination.blubblub.R;
 import beyond_imagination.blubblub.Setting;
 
 /**
@@ -52,6 +53,7 @@ public class AutoService extends Service {
         Notification notification;
 
         notification = new Notification.Builder(getApplicationContext())
+                .setSmallIcon(R.drawable.main_icon)
                 .setContentTitle("")
                 .setContentText("")
                 .build();

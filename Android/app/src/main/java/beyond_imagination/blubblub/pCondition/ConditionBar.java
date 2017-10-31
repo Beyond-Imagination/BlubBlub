@@ -82,6 +82,7 @@ public class ConditionBar extends LinearLayout {
         getAttrs(attrs, defStyleAttr);
     }
 
+
     private void init() {
         String infService = Context.LAYOUT_INFLATER_SERVICE;
         LayoutInflater li = (LayoutInflater) getContext().getSystemService(infService);
@@ -186,7 +187,12 @@ public class ConditionBar extends LinearLayout {
         int time = (hour * 60) + min;
 
         // 1시간 전 부터 먹이 주기 가능
-        if (Math.abs(time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() - 1) * 60)
+        // 마지막 밥 준 시간은 절대로 현재시간을 넘을 수 없다. 따라서, 밥 분 시간이 현재시간보다 빠르다면 그건 하루 이상이 지났다는 말이다.
+        if ((time - Integer.valueOf(feedtime)) < 0) {
+            time += 1440;
+        }
+
+        if ((time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() - 1) * 60)
             feedbtn.setEnabled(true);
 
         String showtime;
@@ -249,6 +255,10 @@ public class ConditionBar extends LinearLayout {
         // 10초 0.0042점 감소.
         score = score - (int)turbiditycount;
 
+        if (score < 0) {
+            score = 0;
+        }
+
         return String.valueOf(score);
     }
 
@@ -258,15 +268,7 @@ public class ConditionBar extends LinearLayout {
      * @param order
      */
     public void controllFeedBtn(boolean order) {
-        if (order == true) {
-            if (feedbtn.getVisibility() == View.INVISIBLE) {
-                feedbtn.setVisibility(View.VISIBLE);
-            }
-        } else {
-            if (feedbtn.getVisibility() == View.VISIBLE) {
-                feedbtn.setVisibility(View.INVISIBLE);
-            }
-        }
+        feedbtn.setEnabled(order);
     }
 
     /**
