@@ -108,24 +108,22 @@ public class GetConditionDataService extends Thread {
      */
     public void checkCondition(String feedtime, String temperature, String illumination, String turbidity) {
         Log.d("GetConditionDataService", "checkCondition()");
-        sendRequestToBowl("먹이");
         // time after feeding (min)
         Calendar calendar = Calendar.getInstance(Locale.KOREAN);
         int hour = calendar.get(Calendar.HOUR);
         int min = calendar.get(Calendar.MINUTE);
 
         int time = (hour * 60) + min;
-
         // 먹이 주기가 되면 먹이를 준다.
         if ((time - Integer.valueOf(feedtime)) > (setting.getFeed_cycle() * 60)) {
-            //sendRequestToBowl("먹이");
+            sendRequestToBowl("먹이");
         }
 
         // illumination
         if (Integer.valueOf(illumination) > setting.getIllum_max()) {
-            //sendRequestToBowl("밝음");
+            sendRequestToBowl("밝음");
         } else if (Integer.valueOf(illumination) < setting.getIllum_min()) {
-            //sendRequestToBowl("어두움");
+            sendRequestToBowl("어두움");
         }
     }
 

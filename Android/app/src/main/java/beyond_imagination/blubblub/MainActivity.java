@@ -1,11 +1,15 @@
 package beyond_imagination.blubblub;
 
+import android.*;
+import android.Manifest;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +30,8 @@ import beyond_imagination.blubblub.pWebConnection.GetConditionData;
 import beyond_imagination.blubblub.pWebConnection.SendToBowl;
 import beyond_imagination.blubblub.pWebConnection.SendToChatbot;
 import beyond_imagination.blubblub.pWebView.MainWebView;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * @author Yehun Park
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ConditionBar conditionBar;
 
     // 알림 축적
-    int accumulateCount;
+    private int accumulateCount;
 
     // Identity Data
     private DataHandler dataHandler;
@@ -131,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     /****************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("MainActivity", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -215,6 +222,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        permissionCheck();
+        checkAuto();
+
         Log.d("MainActivity", "onCreate() - success");
     }
 
@@ -249,9 +259,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             // Google Calendar 관련.
+            case REQUEST_PERMISSION_GET_ACCOUNTS:
+                break;
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    Toast.makeText(this, "이 앱은 구글 플레이서비스를 이용할 수가 없으니 까시오.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "이 앱은 구글 플레이서비스를 이용할 수가 없습니다.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
@@ -263,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
                         chattingLayout.getSecretaryService().getmCredential().setSelectedAccountName(accountName);
-                        chattingLayout.getSecretaryService().getScheduleData();
+                        chattingLayout.getSecretaryService().reStartCalendar();
                     }
                 }
                 break;
@@ -272,6 +284,33 @@ public class MainActivity extends AppCompatActivity {
                     chattingLayout.getSecretaryService().getScheduleData();
                 }
                 break;
+        }
+    }
+
+    /**
+     * Permission Check for google service.
+     */
+    @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
+    public void permissionCheck()
+    {
+        int result =ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS);
+        if (result == PackageManager.PERMISSION_DENIED) {
+            EasyPermissions.requestPermissions(mainActivity, "This app needs to access your Google account(via Contacts)", REQUEST_PERMISSION_GET_ACCOUNTS, Manifest.permission.GET_ACCOUNTS);
+        }else{
+        }
+    }
+
+    public void checkAuto()
+    {
+        if (setting.getAuto() == true) {
+            Intent intent = new Intent(this, AutoService.class);
+            intent.putExtra("setting", setting);
+            intent.putExtra("token", dataHandler.getToken());
+            intent.putExtra("secret", dataHandler.getSecret());
+            startService(intent);
+        } else {
+            Intent intent = new Intent(this, AutoService.class);
+            stopService(intent);
         }
     }
 
@@ -381,6 +420,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.d("MainActivity", "onResume()");
 
+        getConditionData.setRunning(true);
+
         Intent intent = getIntent();
         if (intent.getExtras() != null) {
             String type = intent.getExtras().getString("type");
@@ -390,6 +431,13 @@ public class MainActivity extends AppCompatActivity {
 
             onControlMessage(type, body);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("MainActivity", "onStop()");
+        getConditionData.setRunning(false);
     }
 
     public void countAccumulate() {

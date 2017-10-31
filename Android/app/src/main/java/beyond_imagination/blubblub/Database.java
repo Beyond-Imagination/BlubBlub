@@ -124,7 +124,6 @@ public class Database {
             setting.setTmp_min(c.getInt(4));
             setting.setIllum_max(c.getInt(5)+1);
             setting.setIllum_min(c.getInt(6));
-
         }
         catch (Exception e) {
             e.printStackTrace();
