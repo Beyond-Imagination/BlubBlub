@@ -14,6 +14,8 @@ class Chatbot:
             self.dic = json.load(open(self.dict_file, "r"))
 
     def register_dic(self, words):
+        print("register_dic")
+        print("-"*20)
         if len(words) == 0: return
         tmp = ["@"]
         for i in words:
@@ -32,6 +34,7 @@ class Chatbot:
     # 딕셔너리에 글 등록하기
     def set_word3(self, dic, s3):
         print("set_word3")
+        print("-" * 20)
         w1, w2, w3 = s3
         if not w1 in self.dic: self.dic[w1] = {}
         if not w2 in self.dic[w1]: self.dic[w1][w2] = {}
@@ -40,6 +43,8 @@ class Chatbot:
 
     # 문장 만들기 --- (※2)
     def make_sentence(self, head):
+        print("make_sentence")
+        print("-" * 20)
         if not head in self.dic: return ""
         ret = []
         if head != "@": ret.append(head)
@@ -72,14 +77,19 @@ class Chatbot:
         return data
 
     def word_choice(self, sel):
+        print("word_choice")
+        print("-" * 20)
         keys = sel.keys()
         return random.choice(list(keys))
 
     # 챗봇 응답 만들기 --- (※3)
     def make_reply(self, text):
+        print("make_reply")
+        print("-" * 20)
         # 단어 학습 시키기
         if not text[-1] in [".", "?"]: text += "."
         print(text)
+        print("start Twitter()")
         twitter = Twitter()
         words = twitter.pos(text)
         print(words)

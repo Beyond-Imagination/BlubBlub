@@ -46,7 +46,8 @@ class DataThread(Thread):
                 self.fcm.sendStateMessage(0)
                 self.lastRequestTime_Feeding = t
                 self.settingdb.updateSettingTable("feeding_lt",self.lastRequestTime_Feeding)
-            elif Data.temperature > self.maxTemperature and (t - self.lastRequestTime_Temperature) > 3600:
+
+            if Data.temperature > self.maxTemperature and (t - self.lastRequestTime_Temperature) > 3600:
                 self.fcm.sendStateMessage(1)
                 self.lastRequestTime_Temperature = t
                 self.settingdb.updateSettingTable("temp_lt", self.lastRequestTime_Temperature)
@@ -54,7 +55,8 @@ class DataThread(Thread):
                 self.fcm.sendStateMessage(2)
                 self.lastRequestTime_Temperature = t
                 self.settingdb.updateSettingTable("temp_lt", self.lastRequestTime_Temperature)
-            elif Data.illuminance < self.minIlluminance and (t - self.lastRequestTime_Illuminance) > 3600:
+
+            if Data.illuminance < self.minIlluminance and (t - self.lastRequestTime_Illuminance) > 3600:
                 self.fcm.sendStateMessage(3)
                 self.lastRequestTime_Illuminance = t
                 self.settingdb.updateSettingTable("illum_lt", self.lastRequestTime_Illuminance)
@@ -62,7 +64,8 @@ class DataThread(Thread):
                 self.fcm.sendStateMessage(4)
                 self.lastRequestTime_Illuminance = t
                 self.settingdb.updateSettingTable("illum_lt", self.lastRequestTime_Illuminance)
-            elif Data.turbidity == 2 and (t - self.lastRequestTime_Turbidity) > 3600:
+
+            if Data.turbidity == 2 and (t - self.lastRequestTime_Turbidity) > 3600:
                 self.fcm.sendStateMessage(5)
                 self.lastRequestTime_Turbidity = t
                 self.settingdb.updateSettingTable("turb_lt", self.lastRequestTime_Turbidity)
